@@ -6,9 +6,12 @@ module.exports = {
         colors: {
           background: "#f5f5f5",
           charcoal: "#5B616D",
+          finegray: "#B0B1B7",
           mono: {
               500: "#282828",
               "white": "#FBFBFB",
+              lightgray: "#E5E5EA",
+              gray: "#7E7F89",
           }
         }
     },

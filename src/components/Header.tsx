@@ -1,8 +1,29 @@
 import React from "react";
 import {useAccountStore} from "src/modules/AccountStore";
+import {useMatch, useNavigate} from "react-router-dom";
 
 export const Header = () => {
     const account = useAccountStore(state => state.account);
+    
+    const tabs = [
+        {
+            name: "Pods",
+            value: "pods"
+        },
+        {
+            name: "Workspace",
+            value: "workspace"
+        },
+        {
+            name: "Explore",
+            value: "explore"
+        }
+    ];
+    
+    const navigate = useNavigate();
+    
+    const match = useMatch("/:activeTab/*");
+    const activeTab = match?.params.activeTab;
     
     return (
         <>
@@ -15,21 +36,17 @@ export const Header = () => {
                         <div
                             className={"flex flex-row space-x-[36px]"}
                         >
-                            <button
-                                className={"text-[14px] text-charcoal"}
-                            >
-                                Pods
-                            </button>
-                            <button
-                                className={"text-[14px] text-charcoal"}
-                            >
-                                Workspace
-                            </button>
-                            <button
-                                className={"text-[14px] text-charcoal"}
-                            >
-                                Explore
-                            </button>
+                            {
+                                tabs.map((tab, index) => (
+                                    <button
+                                        key={index}
+                                        className={`text-[14px] ${activeTab === tab.value ? "text-mono-500" : "text-finegray"}`}
+                                        onClick={() => navigate(`/${tab.value}`)}
+                                    >
+                                        {tab.name}
+                                    </button>
+                                ))
+                            }
                         </div>
                     </div>
                     {
@@ -71,7 +88,7 @@ export const Header = () => {
                 </div>
             </header>
             <div
-                className={"h-[60px]"}
+                className={"min-h-[60px]"}
             />
         </>
     )
