@@ -14,6 +14,14 @@ module.exports = {
               primary: "#F06C43",
               secondary: "#FFECE7",
             },
+            red: {
+              primary: "#E82A00",
+                secondary: "#FFE9E9",
+            },
+            green: {
+                primary: "#103B37",
+                secondary: "#E6EDED",
+            },
           mono: {
               500: "#282828",
               "white": "#FBFBFB",

@@ -103,7 +103,7 @@ export const ProposalListItem = ({
                     </div>
                 </div>
                 <div
-                    className={"flex flex-col items-end"}
+                    className={"flex flex-col items-end w-[131px]"}
                 >
                     <p
                         className={"text-[14px] leading-[18px] text-mono-black font-medium"}

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import {Explore} from "src/routes/Explore";
 import {Root} from "src/Root";
 import {Circle} from "src/routes/Circle";
@@ -23,6 +23,10 @@ const router = createBrowserRouter([
             },
             {
                 path: "/circle",
+                element: <Navigate to={"/circle/overview"} />
+            },
+            {
+                path: "/circle/:activeName/*",
                 element: <Circle />
             }
         ]
