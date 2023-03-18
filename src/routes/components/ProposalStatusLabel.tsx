@@ -11,7 +11,7 @@ export const ProposalStatusLabel = ({
 }: ProposalStatusLabelProps) => {
     return (
         <div
-            className={`flex flex-row items-center space-x-[10px] px-[12px] py-[4px] ${width ? `w-[${width}px]`: ""}`}
+            className={`flex flex-row  items-center ${width ? `w-[120px]`: ""} space-x-[10px] px-[12px] py-[4px]`}
         >
             {
                 status === "Active" ? (

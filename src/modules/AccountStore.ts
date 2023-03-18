@@ -7,6 +7,8 @@ interface AccountStore {
     setAccount: (account: InjectedAccountWithMeta | null) => void;
     nftContract: ContractPromise | null;
     setNftContract: (nftContract: ContractPromise | null) => void;
+    daoContract: ContractPromise | null;
+    setDaoContract: (nftContract: ContractPromise | null) => void;
 }
 
 export const useAccountStore = create<AccountStore>()((set) => ({
@@ -14,4 +16,6 @@ export const useAccountStore = create<AccountStore>()((set) => ({
     setAccount: (account) => set({ account }),
     nftContract: null,
     setNftContract: (nftContract) => set({ nftContract }),
+    daoContract: null,
+    setDaoContract: (daoContract) => set({ daoContract }),
 }))

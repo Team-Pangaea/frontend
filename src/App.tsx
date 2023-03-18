@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {web3Accounts, web3Enable, web3FromSource} from "@polkadot/extension-dapp";
-import {InjectedAccountWithMeta} from "@polkadot/extension-inject/types";
+import {InjectedAccountWithMeta, InjectedExtension} from "@polkadot/extension-inject/types";
 import {useAccountStore} from "src/modules/AccountStore";
 import {ApiPromise, WsProvider} from "@polkadot/api";
 import type { WeightV2 } from '@polkadot/types/interfaces';
@@ -15,19 +15,20 @@ import { ContractPromise } from '@polkadot/api-contract';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import {Profile} from "src/routes/App/Profile";
+import daomanagerABI from "src/contracts/daomanager.json";
 
 const proofSize = 131072;
 const refTime = 6219235328;
-const storageDepositLimit = null;
+export const storageDepositLimit = null;
 
-const MAX_CALL_WEIGHT = new BN(5_000_000_000_000).isub(BN_ONE);
-const PROOFSIZE = new BN(1_000_000);
+export const MAX_CALL_WEIGHT = new BN(5_000_000_000_000).isub(BN_ONE);
+export const PROOFSIZE = new BN(1_000_000);
 
 function App() {
   const [allAccounts, setAllAccounts] = useState<InjectedAccountWithMeta[]>([]);
   const [minting, setMinting] = useState(false);
-  const [imageUploading, setImageUploading] = useState(false);
   const [ipfsUploading, setIpfsUploading] = useState(false);
+  const [activeAccount, setActiveAccount] = useState<InjectedAccountWithMeta | null>(null);
   
   const [input, setInput] = useState<{
     username: string;
@@ -42,6 +43,9 @@ function App() {
   
   const nftContract = useAccountStore(state => state.nftContract);
   const setNftContract = useAccountStore(state => state.setNftContract);
+  
+  const daoContract = useAccountStore(state => state.daoContract);
+    const setDaoContract = useAccountStore(state => state.setDaoContract);
   
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -80,6 +84,75 @@ function App() {
     }
   };
   
+  const register = async (defaultGasLimit: WeightV2, api: ApiPromise, accountSigner: InjectedExtension) => {
+    let gasLimit = api?.registry.createType('WeightV2', {
+      refTime: MAX_CALL_WEIGHT,
+      proofSize: PROOFSIZE,
+    }) as WeightV2
+    
+    const { gasRequired } = await daoContract!.query["daoManager::register"](activeAccount!.address, {
+      gasLimit,
+      storageDepositLimit,
+    });
+
+    gasLimit = api?.registry.createType('WeightV2', gasRequired) as WeightV2
+
+    await daoContract!.tx["daoManager::register"](
+        {
+          gasLimit,
+          storageDepositLimit,
+        },
+    ).signAndSend(activeAccount!.address, {
+      signer: accountSigner.signer
+    }, async (res) => {
+      if (res.status.isInBlock) {
+        console.log('in a block')
+      } else if (res.status.isFinalized) {
+        console.log('finalized')
+        setLoading(false);
+        setLoggedIn(true);
+      }
+    });
+  }
+  
+  const mint = async (defaultGasLimit: WeightV2, api: ApiPromise, accountSigner: InjectedExtension) => {
+    let gasLimit = defaultGasLimit;
+
+    const ImgHash = JSON.stringify(`ipfs://${input.image}`);
+    console.log(ImgHash);
+    
+    const { gasRequired } = await nftContract!.query["customMint::mint"](
+        activeAccount!.address,
+        {
+          gasLimit,
+          storageDepositLimit,
+        },
+        activeAccount!.address,
+        ImgHash,
+        DAOMANAGER_ADDRESS_SHIBUYA
+    )
+
+    gasLimit = api?.registry.createType('WeightV2', gasRequired) as WeightV2
+
+    await nftContract!.tx["customMint::mint"](
+        {
+          gasLimit,
+          storageDepositLimit,
+        },
+        activeAccount!.address,
+        ImgHash,
+        DAOMANAGER_ADDRESS_SHIBUYA
+    ).signAndSend(activeAccount!.address, {
+      signer: accountSigner.signer
+    }, async (res) => {
+      if (res.status.isInBlock) {
+        console.log('in a block')
+      } else if (res.status.isFinalized) {
+        console.log('finalized')
+      }
+    });
+  }  
+  
   const handleMint = async () => {
     setLoading(true);
     
@@ -92,46 +165,12 @@ function App() {
       proofSize: PROOFSIZE,
     }) as WeightV2
 
-    const ImgHash = JSON.stringify(`ipfs://${input.image}`);
-    console.log(ImgHash);
-
     const accountSigner = await web3FromSource(
-        account!.meta.source
+        activeAccount!.meta.source
     );
     
-    const { gasRequired } = await nftContract!.query["customMint::mint"](
-        account!.address,
-        {
-          gasLimit,
-          storageDepositLimit,
-        },
-        account!.address,
-        ImgHash,
-        DAOMANAGER_ADDRESS_SHIBUYA
-    )
-
-    gasLimit = api?.registry.createType('WeightV2', gasRequired) as WeightV2
-
-    await nftContract!.tx["customMint::mint"](
-        {
-          gasLimit,
-          storageDepositLimit,
-        },
-        account!.address,
-        ImgHash,
-        DAOMANAGER_ADDRESS_SHIBUYA
-    ).signAndSend(account!.address, {
-      signer: accountSigner.signer
-    }, async (res) => {
-      if (res.status.isInBlock) {
-        console.log('in a block')
-      } else if (res.status.isFinalized) {
-        console.log('finalized')
-        setLoading(false);
-        setLoggedIn(true);
-      }
-    });
-
+    mint(gasLimit, api, accountSigner);
+    register(gasLimit, api, accountSigner);
   }
   
   const walletInit = useCallback(async () => {
@@ -148,7 +187,7 @@ function App() {
   }, []);
   
   const setUp = async () => {
-    if (account) {
+    if (activeAccount) {
       setLoading(true);
 
       const wsProvider = new WsProvider(RPC_URL_SHIBUYA);
@@ -166,20 +205,29 @@ function App() {
       
       console.log(tokenContract);
 
-      const {result, output} = await tokenContract.query["psp34::balanceOf"](account.address, {
+      const daomanagerContract = new ContractPromise(
+          api,
+          daomanagerABI,
+          DAOMANAGER_ADDRESS_SHIBUYA
+      );
+
+      setDaoContract(
+          daomanagerContract
+      );
+
+      const {result, output} = await daomanagerContract.query["daoManager::checkMembership"](activeAccount!.address, {
         gasLimit: api?.registry.createType('WeightV2', {
           refTime: MAX_CALL_WEIGHT,
           proofSize: PROOFSIZE,
         }) as WeightV2,
         storageDepositLimit,
-      }, account.address);
+      }, activeAccount!.address);
 
       if (result.isOk) {
-        console.log(output!.toString(), output!.eq(0))
         const obj = JSON.parse(output!.toString());
         console.log(obj.ok);
         // output the return value
-        if(obj.ok > 0)
+        if(obj.ok)
           setLoggedIn(true);
         else
           setMinting(true);
@@ -196,8 +244,8 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (allAccounts.length && !account) {
-      setAccount(allAccounts[0]);
+    if (allAccounts.length && !activeAccount) {
+      setActiveAccount(allAccounts[0]);
       setLoading(false);
     }
   }, [allAccounts]);
@@ -206,6 +254,7 @@ function App() {
     let timeoutId: NodeJS.Timeout | undefined;
 
     if (loggedIn) {
+      setAccount(activeAccount);
       timeoutId = setTimeout(() => {
         navigate("/explore");
       }, 3500);
@@ -217,7 +266,8 @@ function App() {
     }
   }, [loggedIn]);
   
-  if(imageUploading) {
+  
+  if(minting) {
     return (
         <div
             className={"container mx-auto flex flex-col"}
@@ -231,14 +281,14 @@ function App() {
               <p
                   className={"text-[24px] leading-[30px] text-mono-black font-bold"}
               >
-                It’s last step. <br /> 
-                How do you look like?
+                Upload profile picture and<br />
+                we'll do some magic for you
               </p>
               {
                 input.image ? (
                     loading ? (
                         <div
-                          className={"flex flex-col items-center justify-center w-[526px] h-[73px] mt-[36px] "}
+                            className={"flex flex-col items-center justify-center w-[526px] h-[73px] mt-[36px] "}
                         >
                           <div role="status">
                             <svg aria-hidden="true"
@@ -251,13 +301,13 @@ function App() {
                           </div>
                         </div>
                     ) : (
-                    <p
-                        className={"w-[526px] text-[20px] text-center " +
-                            "leading-[25px] text-mono-black font-medium bg-mono-white rounded-[16px] mt-[36px] " +
-                            "border border-[#859EF8] p-[24px] break-all"}
-                    >
-                      {input.image}
-                    </p>
+                        <p
+                            className={"w-[526px] text-[20px] text-center " +
+                                "leading-[25px] text-mono-black font-medium bg-mono-white rounded-[16px] mt-[36px] " +
+                                "border border-[#859EF8] p-[24px] break-all"}
+                        >
+                          {input.image}
+                        </p>
                     )
                 ) : (ipfsUploading ? (
                     <div
@@ -290,46 +340,6 @@ function App() {
                       " disabled:bg-mono-gray disabled:text-finegray disabled:cursor-not-allowed bg-blue-400 text-mono-white self-center"}
                   disabled={!input.image}
                   onClick={() => handleMint()}
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-    )
-  }
-  
-  if(minting) {
-    return (
-        <div
-            className={"container mx-auto flex flex-col"}
-        >
-          <div
-              className={"mt-[232px] flex flex-col items-center"}
-          >
-            <div
-                className={"flex flex-col"}
-            >
-              <p
-                  className={"text-[24px] leading-[30px] text-mono-black font-bold"}
-              >
-                First,<br />
-                Introduce yourself.
-              </p>
-              <input
-                  name="floating_email"
-                  id="floating_email"
-                  className="block py-[8px] px-0 w-[526px] text-mono-black bg-transparent border-0 border-b-2 
-                 border-finegray appearance-none focus:outline-none mt-[42px]"
-                  placeholder="How should we call you?"
-                  onChange={(e) => setInput({...input, username: e.target.value})}
-                  required
-              />
-              <button
-                  className={"mt-[58px] text-[18px] leading-[23px] font-medium w-[164px] rounded-[4px] px-[20px] py-[8px]" +
-                      " disabled:bg-mono-gray disabled:text-finegray disabled:cursor-not-allowed bg-blue-400 text-mono-white self-center"}
-                  disabled={!input.username}
-                  onClick={() => setImageUploading(true)}
               >
                 Confirm
               </button>

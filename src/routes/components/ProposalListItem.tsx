@@ -27,7 +27,10 @@ export const ProposalListItem = ({
             <div
                 className={"flex flex-row items-center space-x-[48px]"}
             >
-                <ProposalStatusLabel width={120} status={status} />
+                <ProposalStatusLabel 
+                    width={120} 
+                    status={status} 
+                />
                 <div
                     className={"flex flex-col"}
                 >
