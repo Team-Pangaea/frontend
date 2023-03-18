@@ -1,4 +1,5 @@
 import React from "react";
+import {AmountLabel} from "src/routes/components/AmountLabel";
 
 export const CircleCard = () => {
     return (
@@ -58,36 +59,14 @@ export const CircleCard = () => {
                 <div
                     className={"flex flex-row space-x-[8px] items-center"}
                 >
-                    <button
-                        className={"flex flex-row items-center space-x-[4px] " +
-                            "py-[8px] px-[12px] bg-[#E7ECFD] rounded-[4px]"}
-                    >
-                        <p
-                            className={"text-[14px] text-[#567af9] font-semibold"}
-                        >
-                            23
-                        </p>
-                        <p
-                            className={"text-[12px] text-charcoal font-medium"}
-                        >
-                            projects
-                        </p>
-                    </button>
-                    <button
-                        className={"flex flex-row items-center space-x-[4px] " +
-                            "py-[8px] px-[12px] bg-[#E7ECFD] rounded-[4px]"}
-                    >
-                        <p
-                            className={"text-[14px] text-[#567af9] font-semibold"}
-                        >
-                            124
-                        </p>
-                        <p
-                            className={"text-[12px] text-charcoal font-medium"}
-                        >
-                            members
-                        </p>
-                    </button>
+                    <AmountLabel 
+                        amount={23}
+                        label={"projects"}
+                    />
+                    <AmountLabel
+                        amount={124}
+                        label={"members"}
+                    />
                 </div>
             </div>
         </div>

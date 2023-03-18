@@ -7,6 +7,13 @@ module.exports = {
           background: "#f5f5f5",
           charcoal: "#5B616D",
           finegray: "#B0B1B7",
+            blue: {
+              400: "#567AF9",
+            },
+            orange: {
+              primary: "#F06C43",
+              secondary: "#FFECE7",
+            },
           mono: {
               500: "#282828",
               "white": "#FBFBFB",

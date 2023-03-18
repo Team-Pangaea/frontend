@@ -7,8 +7,8 @@ export const Header = () => {
     
     const tabs = [
         {
-            name: "Pods",
-            value: "pods"
+            name: "Circle",
+            value: "circle"
         },
         {
             name: "Workspace",
@@ -27,7 +27,7 @@ export const Header = () => {
     
     return (
         <>
-            <header className={"absolute inset-x-0 top-0 h-[60px] flex flex-row align-center bg-white"}>
+            <header className={"fixed inset-x-0 top-0 h-[60px] flex flex-row align-center bg-white"}>
                 <div className={"container mx-auto flex flex-row items-center justify-between"}>
                     <div className={"flex flex-row items-center space-x-[44px]"}>
                         <img

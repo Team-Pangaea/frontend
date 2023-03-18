@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | undefined;
-    console.log("allAccounts", allAccounts);
+    
     if (allAccounts.length && !account) {
       setAccount(allAccounts[0]);
       timeoutId = setTimeout(() => {

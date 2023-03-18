@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {Explore} from "src/routes/Explore";
 import {Root} from "src/Root";
+import {Circle} from "src/routes/Circle";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
             {
                 path: "/explore",
                 element: <Explore />,
+            },
+            {
+                path: "/circle",
+                element: <Circle />
             }
         ]
     },
