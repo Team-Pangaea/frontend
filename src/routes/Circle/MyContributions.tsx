@@ -97,7 +97,7 @@ export const CircleMyContributions = ({}: MyContributionsProps) => {
                                 <p
                                     className={"text-[20px] leading-[25px] text-mono-500 font-bold"}
                                 >
-                                    Contributions
+                                    My Tasks
                                 </p>
                                 <button
                                     className={"text-[14px] leading-[17px] text-blue-400 font-medium"}
