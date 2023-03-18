@@ -44,6 +44,7 @@ export const Header = () => {
                                 tabs.map((tab, index) => (
                                     <button
                                         key={index}
+                                        disabled={!account}
                                         className={`text-[14px] ${activeTab === tab.value ? "text-mono-500" : "text-finegray"}`}
                                         onClick={() => navigate(`/${tab.value}`)}
                                     >

@@ -6,6 +6,7 @@ import {ApiPromise, WsProvider} from "@polkadot/api";
 import type { WeightV2 } from '@polkadot/types/interfaces';
 import { BN, BN_ONE } from "@polkadot/util";
 import {
+  DAO_ADDRESS_SHIBUYA,
   DAOMANAGER_ADDRESS_SHIBUYA,
   RPC_URL_SHIBUYA,
   TOKEN_ADDRESS_SHIBUYA
@@ -16,9 +17,8 @@ import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import {Profile} from "src/routes/App/Profile";
 import daomanagerABI from "src/contracts/daomanager.json";
+import daoABI from "src/contracts/dao.json";
 
-const proofSize = 131072;
-const refTime = 6219235328;
 export const storageDepositLimit = null;
 
 export const MAX_CALL_WEIGHT = new BN(5_000_000_000_000).isub(BN_ONE);
@@ -44,8 +44,14 @@ function App() {
   const nftContract = useAccountStore(state => state.nftContract);
   const setNftContract = useAccountStore(state => state.setNftContract);
   
+  const daoManagerContract = useAccountStore(state => state.daoManagerContract);
+  const setDaoManagerContract = useAccountStore(state => state.setDaoManagerContract);
+  
   const daoContract = useAccountStore(state => state.daoContract);
-    const setDaoContract = useAccountStore(state => state.setDaoContract);
+  const setDaoContract = useAccountStore(state => state.setDaoContract);
+  
+  const api = useAccountStore(state => state.api);
+  const setApi = useAccountStore(state => state.setApi);
   
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -90,14 +96,14 @@ function App() {
       proofSize: PROOFSIZE,
     }) as WeightV2
     
-    const { gasRequired } = await daoContract!.query["daoManager::register"](activeAccount!.address, {
+    const { gasRequired } = await daoManagerContract!.query["daoManager::register"](activeAccount!.address, {
       gasLimit,
       storageDepositLimit,
     });
 
     gasLimit = api?.registry.createType('WeightV2', gasRequired) as WeightV2
 
-    await daoContract!.tx["daoManager::register"](
+    await daoManagerContract!.tx["daoManager::register"](
         {
           gasLimit,
           storageDepositLimit,
@@ -156,11 +162,7 @@ function App() {
   const handleMint = async () => {
     setLoading(true);
     
-    const wsProvider = new WsProvider(RPC_URL_SHIBUYA);
-    const api = await ApiPromise.create({provider: wsProvider});
-    await api.isReady;
-    
-    let gasLimit = api?.registry.createType('WeightV2', {
+    let gasLimit = api!.registry.createType('WeightV2', {
       refTime: MAX_CALL_WEIGHT,
       proofSize: PROOFSIZE,
     }) as WeightV2
@@ -169,8 +171,8 @@ function App() {
         activeAccount!.meta.source
     );
     
-    mint(gasLimit, api, accountSigner);
-    register(gasLimit, api, accountSigner);
+    mint(gasLimit, api!, accountSigner);
+    register(gasLimit, api!, accountSigner);
   }
   
   const walletInit = useCallback(async () => {
@@ -191,10 +193,13 @@ function App() {
       setLoading(true);
 
       const wsProvider = new WsProvider(RPC_URL_SHIBUYA);
-      const api = await ApiPromise.create({ provider: wsProvider });
-      await api.isReady;
+      const initialApi = await ApiPromise.create({ provider: wsProvider });
+      await initialApi.isReady;
+      
+      setApi(initialApi);
+      
       const tokenContract = new ContractPromise(
-          api,
+          initialApi,
           tokenABI,
           TOKEN_ADDRESS_SHIBUYA
       );
@@ -206,17 +211,27 @@ function App() {
       console.log(tokenContract);
 
       const daomanagerContract = new ContractPromise(
-          api,
+          initialApi,
           daomanagerABI,
           DAOMANAGER_ADDRESS_SHIBUYA
       );
 
-      setDaoContract(
+      setDaoManagerContract(
           daomanagerContract
       );
 
+      const daoContract = new ContractPromise(
+          initialApi,
+          daoABI,
+          DAO_ADDRESS_SHIBUYA
+      );
+      
+      setDaoContract(
+          daoContract
+      );
+
       const {result, output} = await daomanagerContract.query["daoManager::checkMembership"](activeAccount!.address, {
-        gasLimit: api?.registry.createType('WeightV2', {
+        gasLimit: initialApi?.registry.createType('WeightV2', {
           refTime: MAX_CALL_WEIGHT,
           proofSize: PROOFSIZE,
         }) as WeightV2,
