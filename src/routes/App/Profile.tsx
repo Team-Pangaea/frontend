@@ -1,7 +1,7 @@
 import React from "react";
 
 interface ProfileProps {
-    username: string;
+    username?: string;
 }
 
 export const Profile = ({username}: ProfileProps) => {
