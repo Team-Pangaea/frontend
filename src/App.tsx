@@ -175,11 +175,14 @@ function App() {
       }, account.address);
 
       if (result.isOk) {
+        console.log(output!.toString(), output!.eq(0))
+        const obj = JSON.parse(output!.toString());
+        console.log(obj.ok);
         // output the return value
-        if(output!.eq(0))
-          setMinting(true);
-        else
+        if(obj.ok > 0)
           setLoggedIn(true);
+        else
+          setMinting(true);
       } else {
         console.log('Error', result.asErr);
       }
@@ -193,19 +196,9 @@ function App() {
   }, [])
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout | undefined;
-    
     if (allAccounts.length && !account) {
       setAccount(allAccounts[0]);
-      // timeoutId = setTimeout(() => {
-      //   navigate("/explore");
-      // }, 3500);
       setLoading(false);
-    }
-    
-    return () => {
-      if(timeoutId)
-        clearTimeout(timeoutId);
     }
   }, [allAccounts]);
 
