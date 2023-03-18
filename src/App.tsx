@@ -5,7 +5,7 @@ import {useAccountStore} from "src/modules/AccountStore";
 import {ApiPromise, WsProvider} from "@polkadot/api";
 import type { WeightV2 } from '@polkadot/types/interfaces';
 import { BN, BN_ONE } from "@polkadot/util";
-import {RPC_URL_SHIBUYA, TOKEN_ADDRESS_SHIBUYA} from "./assets/constants";
+import {MARKETPLACE_ADDRESS_SHIBUYA, RPC_URL_SHIBUYA, TOKEN_ADDRESS_SHIBUYA} from "./assets/constants";
 import tokenABI from "./contracts/token.json";
 import { ContractPromise } from '@polkadot/api-contract';
 import axios from 'axios';
@@ -69,51 +69,53 @@ function App() {
       }));
 
       setIpfsUploading(false);
-
-      const wsProvider = new WsProvider(RPC_URL_SHIBUYA);
-      const api = await ApiPromise.create({provider: wsProvider});
-      await api.isReady;
-      //
-      // const {gasRequired, result, output} = await props.nftContract.query["customMint::mint"]
-      // (account!.address,{gasLimit: api.registry.createType('WeightV2', {
-      //     refTime,
-      //     proofSize,
-      //   }), storageDepositLimit},props.activeAccount.address,ImgHash,MARKETPLACE_ADDRESS_ROCOCO);
-      //
-      // const gasLimit = api.registry.createType('WeightV2', gasRequired);
-      // const { gasRequired, result, output } =
-      //   await props.nftContract.query.get(props.activeAccount.address, {
-      //     gasLimit,
-      //     storageDepositLimit,
-      //   });
-
-      // console.log({ gasRequired, result, output });
-
-      // if (ImgHash) {
-      //   await nftContract!.tx["customMint::mint"](
-      //       {gasLimit : gasLimit, storageDepositLimit},
-      //       props.activeAccount.address,
-      //       ImgHash,
-      //       MARKETPLACE_ADDRESS_ROCOCO
-      //   ).signAndSend(
-      //       props.activeAccount.address,
-      //       { signer: props.signer },
-      //       async (res) => {
-      //         if (res.status.isInBlock) {
-      //           console.log('in a block');
-      //           setMessage("in a block");
-      //         } else if (res.status.isFinalized) {
-      //           console.log('finalized');
-      //           setMessage("finalized");
-      //         }
-      //       }
-      //   );
-      // }
     } catch (error) {
       console.log("Error sending File to IPFS: ");
       console.log(error);
     }
   };
+  
+  const handleMint = async () => {
+    const wsProvider = new WsProvider(RPC_URL_SHIBUYA);
+    const api = await ApiPromise.create({provider: wsProvider});
+    await api.isReady;
+
+    // const gasLimit = api.registry.createType('WeightV2', gasRequired) as WeightV2;
+    //
+    // const {gasRequired, result, output} = await nftContract!.query["customMint::mint"]
+    // (account!.address,{
+    //   gasLimit, storageDepositLimit
+    // }, account!.address, input.image, MARKETPLACE_ADDRESS_SHIBUYA);
+    //
+    // const { gasRequired, result, output } =
+    //   await nftContract!.query.get(account!.address, {
+    //     gasLimit,
+    //     storageDepositLimit,
+    //   });
+    //
+    // console.log({ gasRequired, result, output });
+    //
+    // const signer = await web3FromSource(
+    //     account!.meta.source
+    // );
+    //
+    // await nftContract!.tx["customMint::mint"](
+    //     {gasLimit : gasLimit, storageDepositLimit},
+    //     account!.address,
+    //     input.image,
+    //     MARKETPLACE_ADDRESS_SHIBUYA
+    // ).signAndSend(
+    //     account!.address,
+    //     { signer },
+    //     async (res) => {
+    //       if (res.status.isInBlock) {
+    //         console.log('in a block');
+    //       } else if (res.status.isFinalized) {
+    //         console.log('finalized');
+    //       }
+    //     }
+    // );
+  }
   
   const walletInit = useCallback(async () => {
     const allInjected = await web3Enable("toyota-pangaea");
@@ -246,7 +248,7 @@ function App() {
                   className={"mt-[58px] text-[18px] leading-[23px] font-medium w-[164px] rounded-[4px] px-[20px] py-[8px]" +
                       " disabled:bg-mono-gray disabled:text-finegray disabled:cursor-not-allowed bg-blue-400 text-mono-white self-center"}
                   disabled={!input.image}
-                  onClick={() => setImageUploading(true)}
+                  onClick={() => handleMint()}
               >
                 Confirm
               </button>
