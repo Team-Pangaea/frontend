@@ -2,12 +2,16 @@ import React from "react";
 import {ProjectListItem} from "src/routes/components/ProjectListItem";
 import {TaskListItem} from "src/routes/components/TaskListItem";
 import {ProposalListItem} from "src/routes/components/ProposalListItem";
+import {CircleTabs} from "src/routes/Circle/CircleTabs";
+import {useNavigate} from "react-router-dom";
 
 interface CircleOverviewProps {
     
 }
  
 export const CircleOverview = ({}: CircleOverviewProps) => {
+    const navigate = useNavigate();
+    
     const projects = [
         {
             projectName: "P01-ThisDummyText",
@@ -104,6 +108,7 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
     
     return (
         <>
+            <CircleTabs />
             <div
                 className={"flex flex-row space-x-[20px] mt-[15px]"}
             >
@@ -121,6 +126,7 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
                         </p>
                         <button
                             className={"text-[14px] leading-[17px] text-blue-400 font-medium"}
+                            onClick={() => navigate("projects/all")}
                         >
                             Show all
                         </button>
@@ -150,6 +156,7 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
                         </p>
                         <button
                             className={"text-[14px] leading-[17px] text-blue-400 font-medium"}
+                            onClick={() => navigate("tasks")}
                         >
                             Show all
                         </button>

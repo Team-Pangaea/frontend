@@ -7,6 +7,12 @@ import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import {Explore} from "src/routes/Explore";
 import {Root} from "src/Root";
 import {Circle} from "src/routes/Circle";
+import {toast, ToastContainer} from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+import {CircleOverview} from "src/routes/Circle/Overview";
+import {CircleMyContributions} from "src/routes/Circle/MyContributions";
+import {CircleProjects} from "src/routes/Circle/Projects";
 
 const router = createBrowserRouter([
     {
@@ -23,11 +29,25 @@ const router = createBrowserRouter([
             },
             {
                 path: "/circle",
-                element: <Navigate to={"/circle/overview"} />
-            },
-            {
-                path: "/circle/:activeName/*",
-                element: <Circle />
+                element: <Circle />,
+                children: [
+                    {
+                        index: true,
+                        element: <Navigate to={"/circle/overview"} />
+                    },
+                    {
+                        path: "overview",
+                        element: <CircleOverview />
+                    },
+                    {
+                        path: "my-contributions",
+                        element: <CircleMyContributions />
+                    },
+                    {
+                        path: "overview/projects/*",
+                        element: <CircleProjects />
+                    }
+                ]
             }
         ]
     },
@@ -39,6 +59,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+      <ToastContainer 
+        position={toast.POSITION.BOTTOM_LEFT}
+      />
       <RouterProvider router={router} />
   </React.StrictMode>
 );

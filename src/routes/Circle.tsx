@@ -1,13 +1,11 @@
 import React from "react";
 import {AmountLabel} from "src/routes/components/AmountLabel";
-import {useNavigate, useParams} from "react-router-dom";
-import {CircleOverview} from "src/routes/Circle/Overview";
-import {CircleMyContributions} from "src/routes/Circle/MyContributions";
+import {Outlet, useMatch, useNavigate, useParams} from "react-router-dom";
 
 export const Circle = () => {
-    const { activeName } = useParams();
-    
     const navigate = useNavigate();
+    const match = useMatch("/circle/:activeName");
+    const activeName = match?.params.activeName;
     
     return (
         <div
@@ -106,30 +104,8 @@ export const Circle = () => {
                         </div>
                     </div>
                 </div>
-                <div
-                    className={"flex flex-row items-center space-x-[36px] px-[16px] pb-[12px] border-b-mono-lightgray border-b"}
-                >
-                    <button
-                        className={`text-[16px] leading-[20px] ${activeName === "overview" ? "text-mono-500 font-semibold" : "text-finegray font-regular"}`}
-                        onClick={() => navigate("/circle/overview")}
-                    >
-                        Overview
-                    </button>
-                    <button
-                        onClick={() => navigate("/circle/my-contributions")}
-                        className={`text-[16px] leading-[20px] ${activeName === "my-contributions" ? "text-mono-500 font-semibold" : "text-finegray font-regular"}`}
-                    >
-                        My Contributors
-                    </button>
-                </div>
             </div>
-            {
-                activeName === "overview" ? (
-                    <CircleOverview />
-                ) : (
-                    <CircleMyContributions />
-                )
-            }
+            <Outlet />
         </div>
     )
 }

@@ -3,6 +3,7 @@ import {web3Accounts, web3Enable} from "@polkadot/extension-dapp";
 import {InjectedAccountWithMeta} from "@polkadot/extension-inject/types";
 import {useAccountStore} from "src/modules/AccountStore";
 import {useNavigate} from "react-router-dom";
+import { toast } from 'react-toastify';
 
 function App() {
   const [allAccounts, setAllAccounts] = useState<InjectedAccountWithMeta[]>([]);
@@ -18,7 +19,10 @@ function App() {
     const allInjected = await web3Enable("toyota-pangaea");
 
     if (allInjected.length === 0) {
-      return;
+        window.open("https://polkadot.js.org/extension/", "_blank");
+        toast.error("Please install polkadot extension first");
+        setLoading(false);
+        return;
     }
     
     const temp = await web3Accounts();
