@@ -4,9 +4,18 @@ import {InjectedAccountWithMeta} from "@polkadot/extension-inject/types";
 import {useAccountStore} from "src/modules/AccountStore";
 import {useNavigate} from "react-router-dom";
 import {ApiPromise, WsProvider} from "@polkadot/api";
+import type { WeightV2 } from '@polkadot/types/interfaces';
+import { BN, BN_ONE } from "@polkadot/util";
 import {MARKETPLACE_ADDRESS_SHIBUYA, RPC_URL_SHIBUYA, TOKEN_ADDRESS_SHIBUYA} from "./assets/constants";
 import tokenABI from "./contracts/token.json";
 import { ContractPromise } from '@polkadot/api-contract';
+
+const proofSize = 131072;
+const refTime = 6219235328;
+const storageDepositLimit = null;
+
+const MAX_CALL_WEIGHT = new BN(5_000_000_000_000).isub(BN_ONE);
+const PROOFSIZE = new BN(1_000_000);
 
 function App() {
   const [allAccounts, setAllAccounts] = useState<InjectedAccountWithMeta[]>([]);
@@ -51,9 +60,15 @@ function App() {
           tokenContract
       );
 
-      const {result, output} = await tokenContract.query["psp34::ownerOf"](account.address, {
-        gasLimit: -1,
-      }, { u64: 1 });
+      console.log(tokenContract);
+
+      const {result, output} = await tokenContract.query["psp34::totalSupply"](account.address, {
+        gasLimit: api?.registry.createType('WeightV2', {
+          refTime: MAX_CALL_WEIGHT,
+          proofSize: PROOFSIZE,
+        }) as WeightV2,
+        storageDepositLimit,
+      });
       
       console.log(result.toHuman())
 

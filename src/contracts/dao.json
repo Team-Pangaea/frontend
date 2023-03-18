@@ -1,0 +1,2600 @@
+{
+  "source": {
+    "hash": "0xbf76bd9d835d3f7d102df31935cb5a975c6fb1bf366fc55b60b152dcdac863c3",
+    "language": "ink! 4.0.1",
+    "compiler": "rustc 1.69.0-nightly",
+    "build_info": {
+      "build_mode": "Debug",
+      "cargo_contract_version": "2.0.0-rc",
+      "rust_toolchain": "nightly-x86_64-unknown-linux-gnu",
+      "wasm_opt_settings": {
+        "keep_debug_symbols": false,
+        "optimization_passes": "Z"
+      }
+    }
+  },
+  "contract": {
+    "name": "dao",
+    "version": "0.1.0",
+    "authors": [
+      "[Rafat Hussain] <[rafat.hsn@gmail.com]>"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [
+          {
+            "label": "token",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "metadata",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [],
+        "label": "new",
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink_primitives",
+            "ConstructorResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x9bae9d5e"
+      }
+    ],
+    "docs": [],
+    "events": [
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "member",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "member_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "MemberAdded"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "project_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ProjectCreated"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "proposal_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ProposalCreated"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "task_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "TaskCreated"
+      }
+    ],
+    "lang_error": {
+      "displayName": [
+        "ink",
+        "LangError"
+      ],
+      "type": 11
+    },
+    "messages": [
+      {
+        "args": [
+          {
+            "label": "project_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetProjectTaskIdsInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_project_task_ids",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 12
+        },
+        "selector": "0xc910df62"
+      },
+      {
+        "args": [
+          {
+            "label": "project_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetProjectMembersInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_project_members",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 13
+        },
+        "selector": "0xb4f158b0"
+      },
+      {
+        "args": [
+          {
+            "label": "project_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "JoinProjectInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::join_project",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0xb5ee006f"
+      },
+      {
+        "args": [
+          {
+            "label": "assignee",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetMemberProposalIdsInput1"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_member_proposal_ids",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 12
+        },
+        "selector": "0xaa0e330f"
+      },
+      {
+        "args": [
+          {
+            "label": "task_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "SubmitTaskInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::submit_task",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0x4d9f2f90"
+      },
+      {
+        "args": [
+          {
+            "label": "address",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "AddMemberInput1"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::add_member",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0xeb04e26d"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "ToyotaDao::get_quorum",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 19
+        },
+        "selector": "0x6beac6a3"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "ToyotaDao::get_number_of_proposals",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 19
+        },
+        "selector": "0xb30329eb"
+      },
+      {
+        "args": [
+          {
+            "label": "description",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProposalInput1"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "duration",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProposalInput2"
+              ],
+              "type": 6
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::create_proposal",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0xfe63dac3"
+      },
+      {
+        "args": [
+          {
+            "label": "proposal_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetProposalInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_proposal",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 20
+        },
+        "selector": "0xdc7f2aa4"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "ToyotaDao::get_number_of_tasks",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 19
+        },
+        "selector": "0x0ab4887d"
+      },
+      {
+        "args": [
+          {
+            "label": "description",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProjectInput1"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::create_project",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0x8b482cb1"
+      },
+      {
+        "args": [
+          {
+            "label": "project_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetNumberOfProjectTasksInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_number_of_project_tasks",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 19
+        },
+        "selector": "0xa3b6d21c"
+      },
+      {
+        "args": [
+          {
+            "label": "proposal_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetCurrentVoteCountInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_current_vote_count",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 22
+        },
+        "selector": "0x4af67762"
+      },
+      {
+        "args": [
+          {
+            "label": "task_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetTaskInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_task",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 24
+        },
+        "selector": "0x3211988a"
+      },
+      {
+        "args": [
+          {
+            "label": "assignee",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetMemberPointsInput1"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_member_points",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 19
+        },
+        "selector": "0xa820066b"
+      },
+      {
+        "args": [
+          {
+            "label": "assignee",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateTaskInput1"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "reviewer",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateTaskInput2"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "duration",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateTaskInput3"
+              ],
+              "type": 6
+            }
+          },
+          {
+            "label": "points",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateTaskInput4"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "label": "priority",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateTaskInput5"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::create_task",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0xd690f549"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "ToyotaDao::get_number_of_members",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 19
+        },
+        "selector": "0xe52fd2bf"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "ToyotaDao::get_members",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 13
+        },
+        "selector": "0x9e89ba80"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "ToyotaDao::join_dao",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0x44d9883f"
+      },
+      {
+        "args": [
+          {
+            "label": "proposal_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "VoteInput1"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "label": "vote_cast",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "VoteInput2"
+              ],
+              "type": 8
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::vote",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0xfc5b5936"
+      },
+      {
+        "args": [
+          {
+            "label": "task_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "ReviewTaskInput1"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "label": "review",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "ReviewTaskInput2"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "awarded_points",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "ReviewTaskInput3"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::review_task",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0x9dd608ed"
+      },
+      {
+        "args": [
+          {
+            "label": "proposal_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "FinalizeVoteInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::finalize_vote",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0x85d54406"
+      },
+      {
+        "args": [
+          {
+            "label": "task_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "StartTaskInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::start_task",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0xcf25b202"
+      },
+      {
+        "args": [
+          {
+            "label": "proposal_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetProposalVoteInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_proposal_vote",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 28
+        },
+        "selector": "0x185ce2c8"
+      },
+      {
+        "args": [
+          {
+            "label": "project_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetProjectInput1"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_project",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 31
+        },
+        "selector": "0xf80a7930"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "ToyotaDao::get_token_address",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 33
+        },
+        "selector": "0x84182a7a"
+      },
+      {
+        "args": [
+          {
+            "label": "assignee",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "GetMemberTaskIdsInput1"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::get_member_task_ids",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 12
+        },
+        "selector": "0xe5b543f4"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "ToyotaDao::get_number_of_projects",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 19
+        },
+        "selector": "0xcffd13b8"
+      },
+      {
+        "args": [
+          {
+            "label": "project_id",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProjectTaskInput1"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "label": "assignee",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProjectTaskInput2"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "reviewer",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProjectTaskInput3"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "duration",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProjectTaskInput4"
+              ],
+              "type": 6
+            }
+          },
+          {
+            "label": "points",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProjectTaskInput5"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "label": "priority",
+            "type": {
+              "displayName": [
+                "toyotadao_external",
+                "CreateProjectTaskInput6"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ToyotaDao::create_project_task",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0x16d2c79d"
+      }
+    ]
+  },
+  "storage": {
+    "root": {
+      "layout": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "struct": {
+                  "fields": [
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 0
+                        }
+                      },
+                      "name": "owner"
+                    },
+                    {
+                      "layout": {
+                        "enum": {
+                          "dispatchKey": "0x00000000",
+                          "name": "Option",
+                          "variants": {
+                            "0": {
+                              "fields": [],
+                              "name": "None"
+                            },
+                            "1": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x00000000",
+                                      "ty": 3
+                                    }
+                                  },
+                                  "name": "0"
+                                }
+                              ],
+                              "name": "Some"
+                            }
+                          }
+                        }
+                      },
+                      "name": "_reserved"
+                    }
+                  ],
+                  "name": "Data"
+                }
+              },
+              "name": "ownable"
+            },
+            {
+              "layout": {
+                "struct": {
+                  "fields": [
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 2
+                        }
+                      },
+                      "name": "status"
+                    },
+                    {
+                      "layout": {
+                        "enum": {
+                          "dispatchKey": "0x00000000",
+                          "name": "Option",
+                          "variants": {
+                            "0": {
+                              "fields": [],
+                              "name": "None"
+                            },
+                            "1": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x00000000",
+                                      "ty": 3
+                                    }
+                                  },
+                                  "name": "0"
+                                }
+                              ],
+                              "name": "Some"
+                            }
+                          }
+                        }
+                      },
+                      "name": "_reserved"
+                    }
+                  ],
+                  "name": "Data"
+                }
+              },
+              "name": "guard"
+            },
+            {
+              "layout": {
+                "struct": {
+                  "fields": [
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 4
+                        }
+                      },
+                      "name": "metadata"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x743f9ad9",
+                                      "ty": 0
+                                    }
+                                  },
+                                  "name": "creator"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x743f9ad9",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "description"
+                                }
+                              ],
+                              "name": "Proposal"
+                            }
+                          },
+                          "root_key": "0x743f9ad9"
+                        }
+                      },
+                      "name": "proposal"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x2f8258a6",
+                                      "ty": 5
+                                    }
+                                  },
+                                  "name": "yes_votes"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x2f8258a6",
+                                      "ty": 5
+                                    }
+                                  },
+                                  "name": "no_votes"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x2f8258a6",
+                                      "ty": 6
+                                    }
+                                  },
+                                  "name": "start"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x2f8258a6",
+                                      "ty": 6
+                                    }
+                                  },
+                                  "name": "end"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x2f8258a6",
+                                      "name": "VoteStatus",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "NotAvailable"
+                                        },
+                                        "1": {
+                                          "fields": [],
+                                          "name": "InProgress"
+                                        },
+                                        "2": {
+                                          "fields": [],
+                                          "name": "Passed"
+                                        },
+                                        "3": {
+                                          "fields": [],
+                                          "name": "Failed"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "vote_status"
+                                }
+                              ],
+                              "name": "Vote"
+                            }
+                          },
+                          "root_key": "0x2f8258a6"
+                        }
+                      },
+                      "name": "vote"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd65c5c05",
+                                      "ty": 0
+                                    }
+                                  },
+                                  "name": "assignee"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd65c5c05",
+                                      "ty": 0
+                                    }
+                                  },
+                                  "name": "reviewer"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd65c5c05",
+                                      "ty": 0
+                                    }
+                                  },
+                                  "name": "owner"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd65c5c05",
+                                      "ty": 6
+                                    }
+                                  },
+                                  "name": "deadline"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd65c5c05",
+                                      "ty": 5
+                                    }
+                                  },
+                                  "name": "points"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0xd65c5c05",
+                                      "name": "TaskPriority",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [],
+                                          "name": "Low"
+                                        },
+                                        "2": {
+                                          "fields": [],
+                                          "name": "Moderate"
+                                        },
+                                        "3": {
+                                          "fields": [],
+                                          "name": "High"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "priority"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0xd65c5c05",
+                                      "name": "TaskStatus",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "ToDo"
+                                        },
+                                        "1": {
+                                          "fields": [],
+                                          "name": "InProgress"
+                                        },
+                                        "2": {
+                                          "fields": [],
+                                          "name": "UnderReview"
+                                        },
+                                        "3": {
+                                          "fields": [],
+                                          "name": "Done"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "status"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd65c5c05",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "review"
+                                }
+                              ],
+                              "name": "Task"
+                            }
+                          },
+                          "root_key": "0xd65c5c05"
+                        }
+                      },
+                      "name": "task"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd677f22a",
+                                      "ty": 0
+                                    }
+                                  },
+                                  "name": "creator"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd677f22a",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "description"
+                                }
+                              ],
+                              "name": "Project"
+                            }
+                          },
+                          "root_key": "0xd677f22a"
+                        }
+                      },
+                      "name": "project"
+                    },
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 7
+                        }
+                      },
+                      "name": "members"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xd8a52a23",
+                              "ty": 5
+                            }
+                          },
+                          "root_key": "0xd8a52a23"
+                        }
+                      },
+                      "name": "member_token"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xf62a07e1",
+                              "ty": 5
+                            }
+                          },
+                          "root_key": "0xf62a07e1"
+                        }
+                      },
+                      "name": "member_points"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x5d9ab0aa",
+                              "ty": 8
+                            }
+                          },
+                          "root_key": "0x5d9ab0aa"
+                        }
+                      },
+                      "name": "member_votes"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xb1e46960",
+                              "ty": 9
+                            }
+                          },
+                          "root_key": "0xb1e46960"
+                        }
+                      },
+                      "name": "member_tasks"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x3a53fd28",
+                              "ty": 9
+                            }
+                          },
+                          "root_key": "0x3a53fd28"
+                        }
+                      },
+                      "name": "member_proposals"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x63898943",
+                              "ty": 9
+                            }
+                          },
+                          "root_key": "0x63898943"
+                        }
+                      },
+                      "name": "project_tasks"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x04fc3e4b",
+                              "ty": 7
+                            }
+                          },
+                          "root_key": "0x04fc3e4b"
+                        }
+                      },
+                      "name": "project_members"
+                    },
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 0
+                        }
+                      },
+                      "name": "token"
+                    },
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 5
+                        }
+                      },
+                      "name": "quorum"
+                    },
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 5
+                        }
+                      },
+                      "name": "proposal_id"
+                    },
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 5
+                        }
+                      },
+                      "name": "member_id"
+                    },
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 5
+                        }
+                      },
+                      "name": "project_id"
+                    },
+                    {
+                      "layout": {
+                        "leaf": {
+                          "key": "0x00000000",
+                          "ty": 5
+                        }
+                      },
+                      "name": "task_id"
+                    }
+                  ],
+                  "name": "Data"
+                }
+              },
+              "name": "dao"
+            }
+          ],
+          "name": "DaoContract"
+        }
+      },
+      "root_key": "0x00000000"
+    }
+  },
+  "types": [
+    {
+      "id": 0,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 1,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "type": {
+        "def": {
+          "array": {
+            "len": 32,
+            "type": 2
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": {
+        "def": {
+          "primitive": "u8"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": {
+        "def": {
+          "tuple": []
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 2
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "primitive": "bool"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 5
+          }
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "CouldNotReadInput"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 9
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 7
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 15
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 15
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 16
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 16
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 17,
+                    "typeName": "OwnableError"
+                  }
+                ],
+                "index": 0,
+                "name": "OwnableError"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 18,
+                    "typeName": "ReentrancyGuardError"
+                  }
+                ],
+                "index": 1,
+                "name": "ReentrancyError"
+              },
+              {
+                "index": 2,
+                "name": "MemberAlreadyExists"
+              },
+              {
+                "index": 3,
+                "name": "MemberDoesNotExist"
+              },
+              {
+                "index": 4,
+                "name": "NotEligibleForMembership"
+              },
+              {
+                "index": 5,
+                "name": "WrongTaskPriority"
+              },
+              {
+                "index": 6,
+                "name": "MemberExistsInProject"
+              },
+              {
+                "index": 7,
+                "name": "TaskDoesNotExist"
+              },
+              {
+                "index": 8,
+                "name": "IneligibleCaller"
+              },
+              {
+                "index": 9,
+                "name": "MemberHasAlreadyVoted"
+              },
+              {
+                "index": 10,
+                "name": "VotingPeriodExpired"
+              },
+              {
+                "index": 11,
+                "name": "ProposalDoesNotExist"
+              },
+              {
+                "index": 12,
+                "name": "VoteNotAvailable"
+              },
+              {
+                "index": 13,
+                "name": "VoteOngoing"
+              },
+              {
+                "index": 14,
+                "name": "QuorumNotAchieved"
+              },
+              {
+                "index": 15,
+                "name": "NotAProjectMember"
+              }
+            ]
+          }
+        },
+        "path": [
+          "toyota_pkg",
+          "impls",
+          "dao",
+          "types",
+          "DaoError"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "CallerIsNotOwner"
+              },
+              {
+                "index": 1,
+                "name": "NewOwnerIsZero"
+              }
+            ]
+          }
+        },
+        "path": [
+          "openbrush_contracts",
+          "traits",
+          "errors",
+          "ownable",
+          "OwnableError"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "ReentrantCall"
+              }
+            ]
+          }
+        },
+        "path": [
+          "openbrush_contracts",
+          "traits",
+          "errors",
+          "reentrancy_guard",
+          "ReentrancyGuardError"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 5
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 21
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 21
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "creator",
+                "type": 0,
+                "typeName": "AccountId"
+              },
+              {
+                "name": "description",
+                "type": 4,
+                "typeName": "String"
+              }
+            ]
+          }
+        },
+        "path": [
+          "toyota_pkg",
+          "impls",
+          "dao",
+          "types",
+          "Proposal"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 23
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 23
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "type": {
+        "def": {
+          "tuple": [
+            5,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "id": 24,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 25
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 25
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "assignee",
+                "type": 0,
+                "typeName": "AccountId"
+              },
+              {
+                "name": "reviewer",
+                "type": 0,
+                "typeName": "AccountId"
+              },
+              {
+                "name": "owner",
+                "type": 0,
+                "typeName": "AccountId"
+              },
+              {
+                "name": "deadline",
+                "type": 6,
+                "typeName": "Timestamp"
+              },
+              {
+                "name": "points",
+                "type": 5,
+                "typeName": "u32"
+              },
+              {
+                "name": "priority",
+                "type": 26,
+                "typeName": "TaskPriority"
+              },
+              {
+                "name": "status",
+                "type": 27,
+                "typeName": "TaskStatus"
+              },
+              {
+                "name": "review",
+                "type": 4,
+                "typeName": "String"
+              }
+            ]
+          }
+        },
+        "path": [
+          "toyota_pkg",
+          "impls",
+          "dao",
+          "types",
+          "Task"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "index": 1,
+                "name": "Low"
+              },
+              {
+                "index": 2,
+                "name": "Moderate"
+              },
+              {
+                "index": 3,
+                "name": "High"
+              }
+            ]
+          }
+        },
+        "path": [
+          "toyota_pkg",
+          "impls",
+          "dao",
+          "types",
+          "TaskPriority"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "ToDo"
+              },
+              {
+                "index": 1,
+                "name": "InProgress"
+              },
+              {
+                "index": 2,
+                "name": "UnderReview"
+              },
+              {
+                "index": 3,
+                "name": "Done"
+              }
+            ]
+          }
+        },
+        "path": [
+          "toyota_pkg",
+          "impls",
+          "dao",
+          "types",
+          "TaskStatus"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 29
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 29
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "yes_votes",
+                "type": 5,
+                "typeName": "u32"
+              },
+              {
+                "name": "no_votes",
+                "type": 5,
+                "typeName": "u32"
+              },
+              {
+                "name": "start",
+                "type": 6,
+                "typeName": "Timestamp"
+              },
+              {
+                "name": "end",
+                "type": 6,
+                "typeName": "Timestamp"
+              },
+              {
+                "name": "vote_status",
+                "type": 30,
+                "typeName": "VoteStatus"
+              }
+            ]
+          }
+        },
+        "path": [
+          "toyota_pkg",
+          "impls",
+          "dao",
+          "types",
+          "Vote"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "NotAvailable"
+              },
+              {
+                "index": 1,
+                "name": "InProgress"
+              },
+              {
+                "index": 2,
+                "name": "Passed"
+              },
+              {
+                "index": 3,
+                "name": "Failed"
+              }
+            ]
+          }
+        },
+        "path": [
+          "toyota_pkg",
+          "impls",
+          "dao",
+          "types",
+          "VoteStatus"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 32
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 32
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "creator",
+                "type": 0,
+                "typeName": "AccountId"
+              },
+              {
+                "name": "description",
+                "type": 4,
+                "typeName": "String"
+              }
+            ]
+          }
+        },
+        "path": [
+          "toyota_pkg",
+          "impls",
+          "dao",
+          "types",
+          "Project"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 11
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    }
+  ],
+  "version": "4"
+}
