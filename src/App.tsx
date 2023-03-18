@@ -4,6 +4,7 @@ import {InjectedAccountWithMeta} from "@polkadot/extension-inject/types";
 import {useAccountStore} from "src/modules/AccountStore";
 import {useNavigate} from "react-router-dom";
 import {ApiPromise, WsProvider} from "@polkadot/api";
+import { BN } from "@polkadot/util";
 import {MARKETPLACE_ADDRESS_SHIBUYA, RPC_URL_SHIBUYA, TOKEN_ADDRESS_SHIBUYA} from "./assets/constants";
 import tokenABI from "./contracts/token.json";
 import { ContractPromise } from '@polkadot/api-contract';
@@ -34,6 +35,21 @@ function App() {
     setAllAccounts(temp);
   }, []);
 
+  function readOnlyGasLimit(api: ApiPromise) {
+    const MAX_CALL_WEIGHT = new BN(5_000_000_000_000);
+  
+    try {
+      const ret = api?.registry?.createType("WeightV2", {
+        refTime: new BN(1_000_000_000_000),
+        proofSize: MAX_CALL_WEIGHT,
+      });
+  
+      return ret;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+  
   const setUp = async () => {
     if (account) {
       setLoading(true);
@@ -51,8 +67,11 @@ function App() {
           tokenContract
       );
 
+      const ret = readOnlyGasLimit(api);
+      console.log(ret)
+      
+
       const {result, output} = await tokenContract.query["psp34::ownerOf"](account.address, {
-        gasLimit: -1,
       }, { u64: 1 });
       
       console.log(result.toHuman())

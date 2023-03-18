@@ -43,6 +43,9 @@ export const TaskListItem = ({
                 <div
                     className={"flex flex-row items-center pr-[8px] pl-[4px] bg-mono-lightgray rounded-[4px]"}
                 >
+                    <img 
+                        src={"/ic_cal.svg"}
+                    />
                     <p
                         className={"text-[12px] leading-[15px] text-mono-500"}
                     >

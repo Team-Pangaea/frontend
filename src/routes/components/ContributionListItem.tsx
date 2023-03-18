@@ -19,7 +19,7 @@ export const ContributionListItem = ({
             >
                 {name}
             </p>
-            <ContributionStatusLabel status={status} />
+            <ContributionStatusLabel status={status} width={60} />
         </div>
     )
 }

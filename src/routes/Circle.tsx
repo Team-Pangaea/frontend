@@ -1,10 +1,9 @@
 import React from "react";
 import {AmountLabel} from "src/routes/components/AmountLabel";
-import {Outlet, useMatch, useNavigate, useParams} from "react-router-dom";
+import {Outlet, useMatch} from "react-router-dom";
 
 export const Circle = () => {
-    const navigate = useNavigate();
-    const match = useMatch("/circle/:activeName");
+    const match = useMatch("/circle/overview/:activeName/*");
     const activeName = match?.params.activeName;
     
     return (
@@ -60,10 +59,24 @@ export const Circle = () => {
                                 src={"/right-arrow.svg"}
                             />
                             <p
-                                className={"text-[16px] leading-[20px] text-mono-500 font-medium"}
+                                className={`text-[16px] leading-[20px] ${activeName ? "text-finegray" : "text-mono-500"} font-medium`}
                             >
                                 Duckee
                             </p>
+                            {
+                                activeName ? (
+                                    <>
+                                        <img
+                                            src={"/right-arrow.svg"}
+                                        />
+                                        <p
+                                            className={"text-[16px] leading-[20px] text-mono-500 font-medium"}
+                                        >
+                                            {activeName[0].toUpperCase() + activeName.slice(1)}
+                                        </p>
+                                    </>
+                                ) : null
+                            }
                         </div>
                         <div
                             className={"flex flex-row space-x-[8px] items-center"}

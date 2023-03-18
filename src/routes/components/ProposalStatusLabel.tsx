@@ -2,14 +2,16 @@ import React from "react";
 
 interface ProposalStatusLabelProps {
     status: string;
+    width?: number;
 }
 
 export const ProposalStatusLabel = ({
     status,
+    width,
 }: ProposalStatusLabelProps) => {
     return (
         <div
-            className={"flex flex-row items-center space-x-[10px] px-[12px] py-[4px] w-[120px]"}
+            className={`flex flex-row items-center space-x-[10px] px-[12px] py-[4px] ${width ? `w-[${width}px]`: ""}`}
         >
             {
                 status === "Active" ? (

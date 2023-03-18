@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {CircleOverview} from "src/routes/Circle/Overview";
 import {CircleMyContributions} from "src/routes/Circle/MyContributions";
 import {CircleProjects} from "src/routes/Circle/Projects";
+import {CircleTasks} from "src/routes/Circle/Tasks";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
                     {
                         path: "overview/projects/*",
                         element: <CircleProjects />
+                    },
+                    {
+                        path: "overview/tasks/*",
+                        element: <CircleTasks />
                     }
                 ]
             }
