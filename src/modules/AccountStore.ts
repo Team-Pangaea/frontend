@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import {InjectedAccountWithMeta} from "@polkadot/extension-inject/types";
+import {InjectedAccountWithMeta, InjectedExtension} from "@polkadot/extension-inject/types";
 import {ContractPromise} from "@polkadot/api-contract";
 import {ApiPromise} from "@polkadot/api";
 
@@ -14,6 +14,8 @@ interface AccountStore {
     setDaoManagerContract: (nftContract: ContractPromise | null) => void;
     api: ApiPromise | null;
     setApi: (api: ApiPromise | null) => void;
+    signer: InjectedExtension | null;
+    setSigner: (signer: InjectedExtension | null) => void
 }
 
 export const useAccountStore = create<AccountStore>()((set) => ({
@@ -27,4 +29,6 @@ export const useAccountStore = create<AccountStore>()((set) => ({
     setDaoManagerContract: (daoManagerContract) => set({ daoManagerContract }),
     api: null,
     setApi: (api) => set({ api }),
+    signer: null,
+    setSigner: (signer) => set({ signer })
 }))

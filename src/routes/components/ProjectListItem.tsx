@@ -1,5 +1,6 @@
 import React from "react";
 import {MemberAmountLabel} from "src/routes/components/MemberAmountLabel";
+import {useNavigate} from "react-router-dom";
 
 interface ProjectListItemProps {
     projectName: string;
@@ -12,13 +13,17 @@ export const ProjectListItem = ({
     projectMembers,
     isJoined,
 }: ProjectListItemProps) => {
+    const navigate = useNavigate();
+    
     return (
         <div
             className={"flex flex-row items-center justify-between py-[8px] px-[24px]"}
         >
-            <p>
+            <button
+                onClick={() => navigate(`circle/overview/projects/1/`)}
+            >
                 {projectName}
-            </p>
+            </button>
             <div
                 className={"flex flex-row space-x-[8px]"}
             >

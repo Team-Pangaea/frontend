@@ -81,11 +81,6 @@ export const CircleProjects = () => {
                     >
                         Projects
                     </p>
-                    <button
-                        className={"text-[14px] leading-[17px] text-blue-400 font-medium"}
-                    >
-                        Show all
-                    </button>
                 </div>
                 {
                     projects.map((project, index) => (

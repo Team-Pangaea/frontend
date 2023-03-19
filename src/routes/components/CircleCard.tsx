@@ -1,11 +1,18 @@
 import React from "react";
 import {AmountLabel} from "src/routes/components/AmountLabel";
+import {useNavigate} from "react-router-dom";
 
 export const CircleCard = () => {
+    const navigate = useNavigate();
+    
     return (
         <div
             className={"flex flex-col items-center space-y-[12px] border rounded-[12px] " +
-                "border-lightgray py-[32px] bg-mono-white"}
+                "border-lightgray py-[32px] bg-mono-white cursor-pointer hover:opacity-80"}
+            onClick={() => {
+                navigate("/circle");
+                window.scrollTo(0, 0);
+            }}
         >
             <img
                 src={"/circle-profile.svg"}    

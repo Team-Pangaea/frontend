@@ -47,11 +47,12 @@ function App() {
   const daoManagerContract = useAccountStore(state => state.daoManagerContract);
   const setDaoManagerContract = useAccountStore(state => state.setDaoManagerContract);
   
-  const daoContract = useAccountStore(state => state.daoContract);
   const setDaoContract = useAccountStore(state => state.setDaoContract);
   
   const api = useAccountStore(state => state.api);
   const setApi = useAccountStore(state => state.setApi);
+  
+  const setSigner = useAccountStore(state => state.setSigner);
   
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);

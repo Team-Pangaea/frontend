@@ -1,13 +1,5 @@
 import React, {useEffect} from "react";
 import {CircleCard} from "src/routes/components/CircleCard";
-import daoABI from "src/contracts/dao.json";
-import daomanagerABI from "../contracts/daomanager.json";
-import {ContractPromise} from "@polkadot/api-contract";
-import {
-    DAO_ADDRESS_SHIBUYA,
-    RPC_URL_SHIBUYA,
-} from "src/assets/constants";
-import {ApiPromise, WsProvider} from "@polkadot/api";
 import {WeightV2} from "@polkadot/types/interfaces";
 import {useAccountStore} from "src/modules/AccountStore";
 import {MAX_CALL_WEIGHT, PROOFSIZE, storageDepositLimit} from "src/App";
@@ -19,7 +11,15 @@ export const Explore = () => {
     const daoManagerContract = useAccountStore(state => state.daoManagerContract);
     
     const test = async () => {
-        const isMember = await daoManagerContract!.query["daoManager::getDaos"](account!.address, {
+        const daos = await daoManagerContract!.query["daoManager::getDaos"](account!.address, {
+            gasLimit: api?.registry.createType('WeightV2', {
+                refTime: MAX_CALL_WEIGHT,
+                proofSize: PROOFSIZE,
+            }) as WeightV2,
+            storageDepositLimit,
+        });
+
+        const members = await daoManagerContract!.query["daoManager::getMembers"](account!.address, {
             gasLimit: api?.registry.createType('WeightV2', {
                 refTime: MAX_CALL_WEIGHT,
                 proofSize: PROOFSIZE,
@@ -27,7 +27,7 @@ export const Explore = () => {
             storageDepositLimit,
         });
         
-        console.log(isMember.output?.toHuman());
+        console.log(daos.output?.toHuman(), members.output?.toHuman());
     }
     
     useEffect(() => {
