@@ -172,9 +172,30 @@ function App() {
     const accountSigner = await web3FromSource(
         activeAccount!.meta.source
     );
+
+    const tokenContract = new ContractPromise(
+        api!,
+        tokenABI,
+        TOKEN_ADDRESS_SHIBUYA
+    );
+
+    const {output} = await tokenContract.query["psp34::balanceOf"](account!.address, {
+      gasLimit: api?.registry.createType('WeightV2', {
+        refTime: MAX_CALL_WEIGHT,
+        proofSize: PROOFSIZE,
+      }) as WeightV2,
+      storageDepositLimit,
+    });
     
-    await mint(gasLimit, api!, accountSigner);
-    await register(gasLimit, api!, accountSigner);
+    const balance = JSON.parse(output!.toString()).ok;
+    
+    if(balance > 0) {
+      await register(gasLimit, api!, accountSigner);
+    } else {
+      mint(gasLimit, api!, accountSigner).then(() => {
+        register(gasLimit, api!, accountSigner);
+      });
+    }
   }
   
   const walletInit = useCallback(async () => {
