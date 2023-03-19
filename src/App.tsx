@@ -179,7 +179,7 @@ function App() {
         TOKEN_ADDRESS_SHIBUYA
     );
 
-    const {output} = await tokenContract.query["psp34::balanceOf"](account!.address, {
+    const {output} = await tokenContract.query["psp34::balanceOf"](activeAccount!.address, {
       gasLimit: api?.registry.createType('WeightV2', {
         refTime: MAX_CALL_WEIGHT,
         proofSize: PROOFSIZE,
