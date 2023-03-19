@@ -77,8 +77,10 @@ export const Circle = () => {
     }
     
     useEffect(() => {
+        if(!account) {
+            navigate(`/`, {replace: true});
+        }
         checkJoined();
-        console.log(account)
     }, [])
     
     return (

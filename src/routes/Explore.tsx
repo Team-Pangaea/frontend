@@ -3,8 +3,11 @@ import {CircleCard} from "src/routes/components/CircleCard";
 import {WeightV2} from "@polkadot/types/interfaces";
 import {useAccountStore} from "src/modules/AccountStore";
 import {MAX_CALL_WEIGHT, PROOFSIZE, storageDepositLimit} from "src/App";
+import {useNavigate} from "react-router-dom";
 
 export const Explore = () => {
+    const navigate = useNavigate();
+    
     const account = useAccountStore(state => state.account);
     const api = useAccountStore(state => state.api);
     
@@ -31,6 +34,9 @@ export const Explore = () => {
     }
     
     useEffect(() => {
+        if(!account) {
+            navigate(`/`, {replace: true});
+        }
         test()
     }, []);
     
