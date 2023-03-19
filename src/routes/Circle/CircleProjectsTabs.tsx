@@ -1,13 +1,12 @@
 import React from "react";
-import {useMatch, useNavigate} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import {CircleTabsComponent} from "src/routes/components/CircleTabsComponent";
 
 export const CircleProjectsTabs = () => {
-    const navigate = useNavigate();
-    const match = useMatch("/circle/overview/projects/:activeName");
-    const activeName = match?.params.activeName;
+    const [searchParams, setSearchParams] = useSearchParams();
+    const activeName = searchParams.get("activeName") || "all";
     
-    const handleClick = (activeName: string) => navigate(`/circle/overview/projects/${activeName}`);
+    const handleClick = (activeName: string) => setSearchParams({activeName});
     
     const tabItems = [
         {

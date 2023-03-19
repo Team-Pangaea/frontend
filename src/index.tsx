@@ -45,11 +45,15 @@ const router = createBrowserRouter([
                         element: <CircleMyContributions />
                     },
                     {
-                        path: "overview/projects/*",
+                        path: "overview/projects",
                         element: <CircleProjects />
                     },
                     {
-                        path: "overview/tasks/*",
+                        path: "overview/tasks",
+                        element: <CircleTasks />
+                    },
+                    {
+                        path: "overview/projects/:projectName",
                         element: <CircleTasks />
                     }
                 ]

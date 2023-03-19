@@ -1,7 +1,6 @@
 import React from "react";
 import {MemberListItem} from "src/routes/components/MemberListItem";
-import {CircleProjectsTabs} from "src/routes/Circle/CircleTasksTabs";
-import {ProposalStatusLabel} from "src/routes/components/ProposalStatusLabel";
+import {CircleTasksTabs} from "src/routes/Circle/CircleTasksTabs";
 import {TaskBox} from "src/routes/components/TaskBox";
 import {ContributionStatusLabel} from "src/routes/components/ContributionStatusLabel";
 
@@ -128,7 +127,7 @@ export const CircleTasks = () => {
             <div
                 className={"flex flex-col grow space-y-[16px]"}
             >
-                <CircleProjectsTabs />
+                <CircleTasksTabs />
                 <div
                     className={"flex flex-row space-x-[20px]"}
                 >

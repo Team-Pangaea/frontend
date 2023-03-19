@@ -20,7 +20,7 @@ export const ProjectListItem = ({
             className={"flex flex-row items-center justify-between py-[8px] px-[24px]"}
         >
             <button
-                onClick={() => navigate(`circle/overview/projects/1/`)}
+                onClick={() => navigate(`/circle/overview/projects/${projectName}/`)}
             >
                 {projectName}
             </button>

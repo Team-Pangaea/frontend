@@ -126,7 +126,7 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
                         </p>
                         <button
                             className={"text-[14px] leading-[17px] text-blue-400 font-medium"}
-                            onClick={() => navigate("projects/all")}
+                            onClick={() => navigate("projects")}
                         >
                             Show all
                         </button>
@@ -156,7 +156,7 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
                         </p>
                         <button
                             className={"text-[14px] leading-[17px] text-blue-400 font-medium"}
-                            onClick={() => navigate("tasks/current-tasks")}
+                            onClick={() => navigate("tasks")}
                         >
                             Show all
                         </button>

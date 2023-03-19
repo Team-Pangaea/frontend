@@ -10,8 +10,11 @@ import {LoadingOverlay} from "src/components/LoadingOverlay";
 export const Circle = () => {
     const navigate = useNavigate();
     
-    const match = useMatch("/circle/overview/:activeName/*");
-    const activeName = match?.params.activeName;
+    const match = useMatch("/circle/overview/:_/:projectName");
+    const projectName = match?.params.projectName;
+
+    const match2 = useMatch("/circle/overview/:activeName");
+    const activeName = match2?.params.activeName;
     
     const daoContract = useAccountStore(state => state.daoContract);
     const account = useAccountStore(state => state.account);
@@ -150,10 +153,25 @@ export const Circle = () => {
                                         <img
                                             src={"/right-arrow.svg"}
                                         />
-                                        <p
-                                            className={"text-[16px] leading-[20px] text-mono-500 font-medium"}
+                                        <button
+                                            onClick={() => navigate("/circle/overview/projects")}
+                                            className={`text-[16px] leading-[20px] ${projectName ? "text-finegray" : "text-mono-500"} font-medium`}
                                         >
                                             {activeName[0].toUpperCase() + activeName.slice(1)}
+                                        </button>
+                                    </>
+                                ) : null
+                            }
+                            {
+                                projectName ? (
+                                    <>
+                                        <img
+                                            src={"/right-arrow.svg"}
+                                        />
+                                        <p
+                                            className={`text-[16px] leading-[20px]text-mono-500 font-medium`}
+                                        >
+                                            {projectName}
                                         </p>
                                     </>
                                 ) : null
@@ -162,8 +180,21 @@ export const Circle = () => {
                         <div
                             className={"flex flex-row space-x-[8px] items-center"}
                         >
-                            <AmountLabel amount={23} label={"projects"} />
-                            <AmountLabel amount={124} label={"members"} />
+                            {
+                                projectName ? (
+                                    <AmountLabel 
+                                        amount={33} 
+                                        label={"project members"}
+                                        isPink
+                                    />
+                                ) : (
+                                    <>
+                                        <AmountLabel amount={23} label={"projects"} />
+                                        <AmountLabel amount={124} label={"members"} />
+                                    </>
+                                )
+                            }
+                            
                         </div>
                         <p
                             className={"text-[16px] leading-[20px] text-mono-500"}

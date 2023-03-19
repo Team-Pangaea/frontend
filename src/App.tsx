@@ -2,7 +2,7 @@ import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {web3Accounts, web3Enable, web3FromSource} from "@polkadot/extension-dapp";
 import {InjectedAccountWithMeta, InjectedExtension} from "@polkadot/extension-inject/types";
 import {useAccountStore} from "src/modules/AccountStore";
-import {ApiPromise, WsProvider} from "@polkadot/api";
+import {ApiPromise, Keyring, WsProvider} from "@polkadot/api";
 import type { WeightV2 } from '@polkadot/types/interfaces';
 import { BN, BN_ONE } from "@polkadot/util";
 import {
@@ -196,6 +196,8 @@ function App() {
       const wsProvider = new WsProvider(RPC_URL_SHIBUYA);
       const initialApi = await ApiPromise.create({ provider: wsProvider });
       await initialApi.isReady;
+      
+      const keyring = new Keyring();
       
       setApi(initialApi);
       
