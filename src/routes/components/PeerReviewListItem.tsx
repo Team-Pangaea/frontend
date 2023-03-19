@@ -1,5 +1,6 @@
 import React from 'react';
 import {RoleLabel} from "src/routes/components/RoleLabel";
+import {useNavigate} from "react-router-dom";
 
 interface PeerReviewListItemProps {
     username: string;
@@ -18,6 +19,8 @@ export const PeerReviewListItem = ({
     point,
     setPoint,
 }: PeerReviewListItemProps) => {
+    const navigate = useNavigate();
+    
     return (
         <div
             className={"flex flex-row space-x-[12px] px-[24px] py-[18px] items-center justify-between"}
@@ -37,11 +40,12 @@ export const PeerReviewListItem = ({
                         {username}
                     </p>
                 </div>
-                <p
-                    className={"text-[14px] leading-[18px] text-mono-black"}
+                <button
+                    onClick={() => navigate(`/circle/my-contributions/allocate/${username}`)}
+                    className={"text-[14px] leading-[18px] text-mono-black underline"}
                 >
                     {contributionCount} Contributions
-                </p>
+                </button>
             </div>
             <div
                 className={"flex flex-row space-x-[20px] items-center"}
@@ -73,7 +77,9 @@ export const PeerReviewListItem = ({
                     <input
                         onChange={(e) => setPoint(parseInt(e.target.value))}
                         value={point}
-                        className={"w-[79px] text-center text-[18px] leading-[24px] text-mono-black font-medium bg-[#F5F5F5] rounded-[4px]"}
+                        className={"" +
+                            "w-[79px] text-center text-[18px] leading-[24px] " +
+                            "text-mono-black font-medium border-mono-lightgray border rounded-[4px] py-[4px] px-[10px]"}
                     />
                     <button
                         onClick={() => setPoint(point + 1)}

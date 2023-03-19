@@ -10,11 +10,14 @@ import {LoadingOverlay} from "src/components/LoadingOverlay";
 export const Circle = () => {
     const navigate = useNavigate();
     
-    const match = useMatch("/circle/overview/:_/:projectName");
+    const match = useMatch("/circle/overview/:activeName/:projectName");
     const projectName = match?.params.projectName;
 
+    const match3 = useMatch("/circle/my-contributions/:activeName/:username");
+    const username = match3?.params.username;
+
     const match2 = useMatch("/circle/:_/:activeName");
-    const activeName = match2?.params.activeName;
+    const activeName = match2?.params.activeName || match3?.params.activeName || match?.params.activeName;
     
     const daoContract = useAccountStore(state => state.daoContract);
     const account = useAccountStore(state => state.account);
@@ -156,8 +159,8 @@ export const Circle = () => {
                                             src={"/right-arrow.svg"}
                                         />
                                         <button
-                                            onClick={() => navigate("/circle/overview/projects")}
-                                            className={`text-[16px] leading-[20px] ${projectName ? "text-finegray" : "text-mono-500"} font-medium`}
+                                            onClick={() => navigate(`/circle/${activeName === "allocate" ? "my-contributions" : "overview"}/${activeName}`)}
+                                            className={`text-[16px] leading-[20px] ${(projectName || username) ? "text-finegray" : "text-mono-500"} font-medium`}
                                         >
                                             {activeName[0].toUpperCase() + activeName.slice(1)}
                                         </button>
@@ -174,6 +177,20 @@ export const Circle = () => {
                                             className={`text-[16px] leading-[20px]text-mono-500 font-medium`}
                                         >
                                             {projectName}
+                                        </p>
+                                    </>
+                                ) : null
+                            }
+                            {
+                                username ? (
+                                    <>
+                                        <img
+                                            src={"/right-arrow.svg"}
+                                        />
+                                        <p
+                                            className={`text-[16px] leading-[20px]text-mono-500 font-medium`}
+                                        >
+                                            {username}
                                         </p>
                                     </>
                                 ) : null

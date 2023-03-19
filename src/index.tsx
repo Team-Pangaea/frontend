@@ -15,6 +15,7 @@ import {CircleMyContributions} from "src/routes/Circle/MyContributions";
 import {CircleProjects} from "src/routes/Circle/Projects";
 import {CircleTasks} from "src/routes/Circle/Tasks";
 import {CircleAllocate} from "src/routes/Circle/Allocate";
+import {CircleUserAllocate} from "src/routes/Circle/UserAllocate";
 
 const router = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
                         path: "my-contributions/allocate",
                         element: <CircleAllocate />
                     },
+                    {
+                        path: "my-contributions/allocate/:username",
+                        element: <CircleUserAllocate />
+                    }
                 ]
             }
         ]
