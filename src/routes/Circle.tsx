@@ -225,7 +225,8 @@ export const Circle = () => {
                         <div
                             className={"flex flex-row space-x-[18px] items-center"}
                         >
-                            <div
+                            <button
+                                onClick={() => window.open("https://duckee.xyz", "_blank")}
                                 className={"flex flex-row space-x-[6px] items-center"}
                             >
                                 <img
@@ -236,7 +237,7 @@ export const Circle = () => {
                                 >
                                     duckee.xyz
                                 </p>
-                            </div>
+                            </button>
                             <div
                                 className={"flex flex-row space-x-[12px] items-center"}
                             >

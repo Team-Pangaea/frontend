@@ -173,8 +173,8 @@ function App() {
         activeAccount!.meta.source
     );
     
-    mint(gasLimit, api!, accountSigner);
-    register(gasLimit, api!, accountSigner);
+    await mint(gasLimit, api!, accountSigner);
+    await register(gasLimit, api!, accountSigner);
   }
   
   const walletInit = useCallback(async () => {

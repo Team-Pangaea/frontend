@@ -11,26 +11,18 @@ export const Explore = () => {
     const account = useAccountStore(state => state.account);
     const api = useAccountStore(state => state.api);
     
-    const daoManagerContract = useAccountStore(state => state.daoManagerContract);
+    const daoContract = useAccountStore(state => state.daoContract);
     
     const test = async () => {
-        const daos = await daoManagerContract!.query["daoManager::getDaos"](account!.address, {
+        const {output} = await daoContract!.query["toyotaDao::getTask"](account!.address, {
             gasLimit: api?.registry.createType('WeightV2', {
                 refTime: MAX_CALL_WEIGHT,
                 proofSize: PROOFSIZE,
             }) as WeightV2,
             storageDepositLimit,
-        });
-
-        const members = await daoManagerContract!.query["daoManager::getMembers"](account!.address, {
-            gasLimit: api?.registry.createType('WeightV2', {
-                refTime: MAX_CALL_WEIGHT,
-                proofSize: PROOFSIZE,
-            }) as WeightV2,
-            storageDepositLimit,
-        });
+        }, 1);
         
-        console.log(daos.output?.toHuman(), members.output?.toHuman());
+        console.log(output?.toHuman());
     }
     
     useEffect(() => {

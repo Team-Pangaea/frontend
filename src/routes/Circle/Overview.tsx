@@ -7,6 +7,8 @@ import {useNavigate} from "react-router-dom";
 import {useAccountStore} from "src/modules/AccountStore";
 import {MAX_CALL_WEIGHT, PROOFSIZE, storageDepositLimit} from "src/App";
 import {WeightV2} from "@polkadot/types/interfaces";
+import {Project, useDAOStore} from "src/modules/DAOStore";
+import { hexToString } from "@polkadot/util";
 
 interface CircleOverviewProps {
     
@@ -20,28 +22,84 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
     
     const api = useAccountStore(state => state.api);
     
+    const dprojects = useDAOStore(state => state.projects);
+    const setProject = useDAOStore(state => state.setProject);
+
+    const dtasks = useDAOStore(state => state.tasks);
+    const setTask = useDAOStore(state => state.setTask);
+    
     const getProjects = async () => {
-        // const {output} = await daoContract!.query["toyotaDao::getNumberOfProjects"](account!.address, {
-        //     gasLimit: api?.registry.createType('WeightV2', {
-        //         refTime: MAX_CALL_WEIGHT,
-        //         proofSize: PROOFSIZE,
-        //     }) as WeightV2,
-        //     storageDepositLimit,
-        // });
-        //
-        // const obj = JSON.parse(output!.toString());
-        // [...new Array(obj.ok)].slice(5).map(async (_, i) => {
-        //     const {output} = await daoContract!.query["toyotaDao::getProject"](account!.address, {
-        //         gasLimit: api?.registry.createType('WeightV2', {
-        //             refTime: MAX_CALL_WEIGHT,
-        //             proofSize: PROOFSIZE,
-        //         }) as WeightV2,
-        //         storageDepositLimit,
-        //     }, i + 1);
-        //    
-        //     console.log(output!.toHuman());
-        // });
+        const {output} = await daoContract!.query["toyotaDao::getNumberOfProjects"](account!.address, {
+            gasLimit: api?.registry.createType('WeightV2', {
+                refTime: MAX_CALL_WEIGHT,
+                proofSize: PROOFSIZE,
+            }) as WeightV2,
+            storageDepositLimit,
+        });
+
+        const obj = JSON.parse(output!.toString());
+        [...new Array(obj.ok)].slice(0, 5).map(async (_, i) => {
+            daoContract!.query["toyotaDao::getProject"](account!.address, {
+                gasLimit: api?.registry.createType('WeightV2', {
+                    refTime: MAX_CALL_WEIGHT,
+                    proofSize: PROOFSIZE,
+                }) as WeightV2,
+                storageDepositLimit,
+            }, i + 1).then(({output}) => {
+                const obj = JSON.parse(output!.toString());
+                setProject(i + 1,{
+                    ...obj.ok,
+                    id: i+1,
+                    description: hexToString(obj.ok.description),
+                } as Project);
+            });
+
+            daoContract!.query["toyotaDao::getProjectMembers"](account!.address, {
+                gasLimit: api?.registry.createType('WeightV2', {
+                    refTime: MAX_CALL_WEIGHT,
+                    proofSize: PROOFSIZE,
+                }) as WeightV2,
+                storageDepositLimit,
+            }, i + 1).then(({output, result}) => {
+                console.log(output, result.toHuman());
+                const obj = JSON.parse(output!.toString());
+                console.log(obj.ok);
+                setProject(i + 1, {
+                    members: obj.ok,
+                });
+            });
+        });
     }
+
+    const getTasks = async () => {
+        const {output} = await daoContract!.query["toyotaDao::getNumberOfTasks"](account!.address, {
+            gasLimit: api?.registry.createType('WeightV2', {
+                refTime: MAX_CALL_WEIGHT,
+                proofSize: PROOFSIZE,
+            }) as WeightV2,
+            storageDepositLimit,
+        });
+
+        const obj = JSON.parse(output!.toString());
+        [...new Array(obj.ok)].slice(0, 5).map(async (_, i) => {
+            daoContract!.query["toyotaDao::getTask"](account!.address, {
+                gasLimit: api?.registry.createType('WeightV2', {
+                    refTime: MAX_CALL_WEIGHT,
+                    proofSize: PROOFSIZE,
+                }) as WeightV2,
+                storageDepositLimit,
+            }, i + 1).then(({output}) => {
+                const obj = JSON.parse(output!.toString());
+                setTask(i + 1,{
+                    ...obj.ok,
+                    id: i+1,
+                    description: hexToString(obj.ok.description),
+                });
+            });
+        });
+    }
+    
+    console.log(dtasks);
     
     const projects = [
         {
@@ -139,6 +197,7 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
     
     useEffect(() => {
         getProjects();
+        getTasks();
     }, []);
     
     return (
@@ -167,11 +226,11 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
                         </button>
                     </div>
                     {
-                        projects.map((project, index) => (
+                        Object.values(dprojects).map((project, index) => (
                             <ProjectListItem
                                 key={index}
-                                projectName={project.projectName}
-                                projectMembers={project.projectMembers}
+                                projectName={project.description || "Project Name"}
+                                projectMembers={project.members?.length || 0}
                                 isJoined={!index}
                             />
                         ))
@@ -197,10 +256,10 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
                         </button>
                     </div>
                     {
-                        tasks.map((task, index) => (
+                        Object.values(dtasks).map((task, index) => (
                             <TaskListItem
                                 key={index}
-                                taskName={task.name}
+                                taskName={`Task-${task.id}`}
                                 dueDate={task.dueDate}
                                 isAssigned={!index}
                             />
