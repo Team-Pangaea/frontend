@@ -3,11 +3,14 @@ import {ReviewListItem} from "src/routes/components/ReviewListItem";
 import {ContributionListItem} from "src/routes/components/ContributionListItem";
 import {CircleTabs} from "src/routes/Circle/CircleTabs";
 import {useNavigate} from "react-router-dom";
+import {useAccountStore} from "src/modules/AccountStore";
 
 interface MyContributionsProps {}
 
 export const CircleMyContributions = ({}: MyContributionsProps) => {
     const navigate = useNavigate();
+    
+    const account = useAccountStore(state => state.account);
     
     const reviews = [
         {
@@ -103,6 +106,9 @@ export const CircleMyContributions = ({}: MyContributionsProps) => {
                                     My Tasks
                                 </p>
                                 <button
+                                    onClick={() => navigate(`/circle/my-contributions/allocate/${
+                                        account?.meta.name || "Chelsea Lee"
+                                    }`)}
                                     className={"text-[14px] leading-[17px] text-blue-400 font-medium"}
                                 >
                                     Show all

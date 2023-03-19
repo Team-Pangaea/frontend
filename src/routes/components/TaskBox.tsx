@@ -5,17 +5,20 @@ interface TaskBoxProps {
     projectName: string;
     dueDate: string;
     assigner?: string;
+    onClick?: () => void;
 }
 
 export const TaskBox = ({
     name,
     projectName,
     dueDate,
-    assigner
+    assigner,
+    onClick
 }: TaskBoxProps) => {
     return (
         <div
-            className={"flex flex-col w-[100%] bg-mono-white rounded-[8px] " +
+            onClick={onClick}
+            className={"flex flex-col w-[100%] bg-mono-white rounded-[8px] cursor-pointer " +
                 "p-[16px] rounded-[16px] border-mono-lightgray border space-y-[12px]"}
         >
             <div

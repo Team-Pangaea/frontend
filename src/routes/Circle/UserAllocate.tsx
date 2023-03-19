@@ -1,12 +1,15 @@
-import React from "react";
-import {CircleTasksTabs} from "src/routes/Circle/CircleTasksTabs";
+import React, { useState } from "react";
 import {ContributionStatusLabel} from "src/routes/components/ContributionStatusLabel";
 import {TaskBox} from "src/routes/components/TaskBox";
 import {useParams} from "react-router-dom";
 import {RoleLabel} from "src/routes/components/RoleLabel";
+import {CircleUserAllocateTabs} from "src/routes/Circle/CircleUserAllocateTab";
+import {TaskDialog} from "src/routes/components/TaskDialog";
 
 export const CircleUserAllocate = () => {
     const {username} = useParams();
+    
+    const [open, setOpen] = useState(false);
     
     const tasks = [
         {
@@ -128,7 +131,7 @@ export const CircleUserAllocate = () => {
             <div
                 className={"flex flex-col grow space-y-[16px]"}
             >
-                <CircleTasksTabs />
+                <CircleUserAllocateTabs />
                 <div
                     className={"flex flex-row space-x-[20px]"}
                 >
@@ -154,6 +157,7 @@ export const CircleUserAllocate = () => {
                             {
                                 tasks.filter(task => task.status === "In Progress").map((task, index) => (
                                     <TaskBox
+                                        onClick={() => setOpen(true)}
                                         key={index}
                                         name={task.name}
                                         projectName={task.projectName}
@@ -183,6 +187,7 @@ export const CircleUserAllocate = () => {
                             {
                                 tasks.filter(task => task.status === "In Review").map((task, index) => (
                                     <TaskBox
+                                        onClick={() => setOpen(true)}
                                         key={index}
                                         name={task.name}
                                         projectName={task.projectName}
@@ -212,6 +217,7 @@ export const CircleUserAllocate = () => {
                             {
                                 tasks.filter(task => task.status === "Done").map((task, index) => (
                                     <TaskBox
+                                        onClick={() => setOpen(true)}
                                         key={index}
                                         name={task.name}
                                         projectName={task.projectName}
@@ -223,6 +229,10 @@ export const CircleUserAllocate = () => {
                         </div>
                     </div>
                 </div>
+                <TaskDialog
+                    open={open}
+                    onClose={() => setOpen(false)}
+                />
             </div>
         </div>
     )

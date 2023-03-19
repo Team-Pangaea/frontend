@@ -3,8 +3,11 @@ import {MemberListItem} from "src/routes/components/MemberListItem";
 import {CircleTasksTabs} from "src/routes/Circle/CircleTasksTabs";
 import {TaskBox} from "src/routes/components/TaskBox";
 import {ContributionStatusLabel} from "src/routes/components/ContributionStatusLabel";
+import {TaskDialog} from "src/routes/components/TaskDialog";
 
 export const CircleTasks = () => {
+    const [open, setOpen] = React.useState(false);
+    
     const members = [
         {
             username: "Chelsea Lee",
@@ -152,7 +155,8 @@ export const CircleTasks = () => {
                         >
                             {
                                 tasks.filter(task => task.status === "In Progress").map((task, index) => (
-                                    <TaskBox 
+                                    <TaskBox
+                                        onClick={() => setOpen(true)}
                                         key={index}
                                         name={task.name} 
                                         projectName={task.projectName} 
@@ -182,6 +186,7 @@ export const CircleTasks = () => {
                             {
                                 tasks.filter(task => task.status === "In Review").map((task, index) => (
                                     <TaskBox
+                                        onClick={() => setOpen(true)}
                                         key={index}
                                         name={task.name}
                                         projectName={task.projectName}
@@ -211,6 +216,7 @@ export const CircleTasks = () => {
                             {
                                 tasks.filter(task => task.status === "Done").map((task, index) => (
                                     <TaskBox
+                                        onClick={() => setOpen(true)}
                                         key={index}
                                         name={task.name}
                                         projectName={task.projectName}
@@ -223,6 +229,10 @@ export const CircleTasks = () => {
                     </div>
                 </div>
             </div>
+            <TaskDialog 
+                open={open} 
+                onClose={() => setOpen(false)} 
+            />
         </div>
     )
 }
