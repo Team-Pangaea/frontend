@@ -114,9 +114,9 @@ function App() {
       signer: accountSigner.signer
     }, async (res) => {
       if (res.status.isInBlock) {
-        console.log('in a block')
+        console.log('register in a block')
       } else if (res.status.isFinalized) {
-        console.log('finalized')
+        console.log('register finalized')
         setLoading(false);
         setLoggedIn(true);
       }
@@ -154,9 +154,9 @@ function App() {
       signer: accountSigner.signer
     }, async (res) => {
       if (res.status.isInBlock) {
-        console.log('in a block')
+        console.log('mint in a block')
       } else if (res.status.isFinalized) {
-        console.log('finalized')
+        console.log('mint finalized')
       }
     });
   }  
