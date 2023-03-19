@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {ProjectListItem} from "src/routes/components/ProjectListItem";
 import {TaskListItem} from "src/routes/components/TaskListItem";
 import {ProposalListItem} from "src/routes/components/ProposalListItem";
 import {CircleTabs} from "src/routes/Circle/CircleTabs";
 import {useNavigate} from "react-router-dom";
+import {useAccountStore} from "src/modules/AccountStore";
+import {MAX_CALL_WEIGHT, PROOFSIZE, storageDepositLimit} from "src/App";
+import {WeightV2} from "@polkadot/types/interfaces";
 
 interface CircleOverviewProps {
     
@@ -11,6 +14,34 @@ interface CircleOverviewProps {
  
 export const CircleOverview = ({}: CircleOverviewProps) => {
     const navigate = useNavigate();
+    
+    const daoContract = useAccountStore(state => state.daoContract);
+    const account = useAccountStore(state => state.account);
+    
+    const api = useAccountStore(state => state.api);
+    
+    const getProjects = async () => {
+        // const {output} = await daoContract!.query["toyotaDao::getNumberOfProjects"](account!.address, {
+        //     gasLimit: api?.registry.createType('WeightV2', {
+        //         refTime: MAX_CALL_WEIGHT,
+        //         proofSize: PROOFSIZE,
+        //     }) as WeightV2,
+        //     storageDepositLimit,
+        // });
+        //
+        // const obj = JSON.parse(output!.toString());
+        // [...new Array(obj.ok)].slice(5).map(async (_, i) => {
+        //     const {output} = await daoContract!.query["toyotaDao::getProject"](account!.address, {
+        //         gasLimit: api?.registry.createType('WeightV2', {
+        //             refTime: MAX_CALL_WEIGHT,
+        //             proofSize: PROOFSIZE,
+        //         }) as WeightV2,
+        //         storageDepositLimit,
+        //     }, i + 1);
+        //    
+        //     console.log(output!.toHuman());
+        // });
+    }
     
     const projects = [
         {
@@ -105,6 +136,10 @@ export const CircleOverview = ({}: CircleOverviewProps) => {
             downVoted: 15,
         },
     ]
+    
+    useEffect(() => {
+        getProjects();
+    }, []);
     
     return (
         <>

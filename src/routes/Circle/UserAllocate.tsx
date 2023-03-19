@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import {ContributionStatusLabel} from "src/routes/components/ContributionStatusLabel";
 import {TaskBox} from "src/routes/components/TaskBox";
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import {RoleLabel} from "src/routes/components/RoleLabel";
 import {CircleUserAllocateTabs} from "src/routes/Circle/CircleUserAllocateTab";
 import {TaskDialog} from "src/routes/components/TaskDialog";
 
 export const CircleUserAllocate = () => {
     const {username} = useParams();
+    
+    const [searchParams, setSearchParams] = useSearchParams();
+    
+    const activeName = searchParams.get("activeName");
     
     const [open, setOpen] = useState(false);
     
@@ -132,103 +136,451 @@ export const CircleUserAllocate = () => {
                 className={"flex flex-col grow space-y-[16px]"}
             >
                 <CircleUserAllocateTabs />
-                <div
-                    className={"flex flex-row space-x-[20px]"}
-                >
-                    <div
-                        className={"flex flex-col space-y-[18px] grow"}
-                    >
+                {
+                    activeName === "reviews-from-members" ? (
                         <div
-                            className={"flex flex-row items-center space-x-[6px]"}
+                            className={"flex flex-col space-y-[20px] grow"}
                         >
-                            <ContributionStatusLabel
-                                status={"In Progress"}
-                                isBig
-                            />
-                            <p
-                                className={"text-[16px] leading-[20px] text-mono-gray font-medium"}
+                            <div
+                                className={"flex flex-row space-x-[16px] items-start"}
                             >
-                                {tasks.filter(task => task.status === "In Progress").length}
-                            </p>
-                        </div>
-                        <div
-                            className={"flex flex-col space-y-[8px]"}
-                        >
-                            {
-                                tasks.filter(task => task.status === "In Progress").map((task, index) => (
-                                    <TaskBox
-                                        onClick={() => setOpen(true)}
-                                        key={index}
-                                        name={task.name}
-                                        projectName={task.projectName}
-                                        dueDate={task.dueDate}
-                                        assigner={task.assigner}
-                                    />
-                                ))
-                            }
-                        </div>
-                    </div>
-                    <div
-                        className={"flex flex-col space-y-[18px] grow"}
-                    >
-                        <div
-                            className={"flex flex-row items-center space-x-[6px]"}
-                        >
-                            <ContributionStatusLabel isBig status={"In Review"} />
-                            <p
-                                className={"text-[16px] leading-[20px] text-mono-gray font-medium"}
+                                <img
+                                    src={"/profile.svg"}
+                                    width={48}
+                                />
+                                <div
+                                    className={"flex flex-col space-y-[8px] grow p-[12px] " +
+                                        "border border-mono-lightgray bg-mono-white relative rounded-[8px]"}
+                                >
+                                        <textarea
+                                            className={"text-[14px] leading-[18px] text-mono-black " +
+                                                " h-[90px] bg-transparent"}
+                                            placeholder={"this is my figma work for wireframe..."}
+                                        />
+                                    <button
+                                        className={"absolute bottom-[12px] right-[12px] text-[12px] leading-[15px] " +
+                                            "text-mono-gray py-[4px] px-[12px] border border-mono-gray" +
+                                            " rounded-[4px]"}
+                                    >
+                                        Comment
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                className={"flex flex-col space-y-[24px]"}
                             >
-                                {tasks.filter(task => task.status === "In Review").length}
-                            </p>
+                                <div
+                                    className={"flex flex-col space-y-[12px]"}
+                                >
+                                    <p
+                                        className={"text-[20px] leading-[25px] text-green-primary font-medium"}
+                                    >
+                                        Cycle: Mar 10 - 17
+                                    </p>
+                                    <div
+                                        className={"flex flex-col space-y-[8px]"}
+                                    >
+                                        <div
+                                            className={"flex flex-col space-y-[12px] " +
+                                                "py-[20px] px-[24px] rounded-[12px] bg-mono-white border " +
+                                                "border-mono-lightgray"}
+                                        >
+                                            <div
+                                                className={"flex flex-row space-x-[16px] items-center"}
+                                            >
+                                                <div
+                                                    className={"flex flex-row space-x-[6px] items-center"}
+                                                >
+                                                    <div 
+                                                        className={"w-[28px] h-[28px] bg-[#242424] rounded-[50%]"}
+                                                    />
+                                                    <p
+                                                        className={"text-[16px] leading-[20px] text-mono-black font-medium"}
+                                                    >
+                                                        Chelsea Lee
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={"flex flex-row items-center space-x-[4px]"}
+                                                >
+                                                    <RoleLabel isOwner />
+                                                    <RoleLabel role={"Core-Contributor"} />
+                                                </div>
+                                            </div>
+                                            <p
+                                                className={"text-[16px] leading-[20px] text-mono-black"}
+                                            >
+                                                We enable communities to build and fund thei  shared needs. Help us build a regenerative crypto.
+                                            </p>
+                                            <div
+                                                className={"flex flex-row justify-between items-center"}
+                                            >
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-mono-gray font-semibold"}
+                                                >
+                                                    Mar. 15, 2023
+                                                </p>
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-[#FFB800] font-semibold"}
+                                                >
+                                                    +3 Points
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={"flex flex-col space-y-[12px] " +
+                                                "py-[20px] px-[24px] rounded-[12px] bg-mono-white border " +
+                                                "border-mono-lightgray"}
+                                        >
+                                            <div
+                                                className={"flex flex-row space-x-[16px] items-center"}
+                                            >
+                                                <div
+                                                    className={"flex flex-row space-x-[6px] items-center"}
+                                                >
+                                                    <div
+                                                        className={"w-[28px] h-[28px] bg-[#242424] rounded-[50%]"}
+                                                    />
+                                                    <p
+                                                        className={"text-[16px] leading-[20px] text-mono-black font-medium"}
+                                                    >
+                                                        Chelsea Lee
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={"flex flex-row items-center space-x-[4px]"}
+                                                >
+                                                    <RoleLabel isOwner />
+                                                    <RoleLabel role={"Core-Contributor"} />
+                                                </div>
+                                            </div>
+                                            <p
+                                                className={"text-[16px] leading-[20px] text-mono-black"}
+                                            >
+                                                We enable communities to build and fund thei  shared needs. Help us build a regenerative crypto.
+                                            </p>
+                                            <div
+                                                className={"flex flex-row justify-between items-center"}
+                                            >
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-mono-gray font-semibold"}
+                                                >
+                                                    Mar. 15, 2023
+                                                </p>
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-[#FFB800] font-semibold"}
+                                                >
+                                                    +3 Points
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={"flex flex-col space-y-[12px] " +
+                                                "py-[20px] px-[24px] rounded-[12px] bg-mono-white border " +
+                                                "border-mono-lightgray"}
+                                        >
+                                            <div
+                                                className={"flex flex-row space-x-[16px] items-center"}
+                                            >
+                                                <div
+                                                    className={"flex flex-row space-x-[6px] items-center"}
+                                                >
+                                                    <div
+                                                        className={"w-[28px] h-[28px] bg-[#242424] rounded-[50%]"}
+                                                    />
+                                                    <p
+                                                        className={"text-[16px] leading-[20px] text-mono-black font-medium"}
+                                                    >
+                                                        Chelsea Lee
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={"flex flex-row items-center space-x-[4px]"}
+                                                >
+                                                    <RoleLabel isOwner />
+                                                    <RoleLabel role={"Core-Contributor"} />
+                                                </div>
+                                            </div>
+                                            <p
+                                                className={"text-[16px] leading-[20px] text-mono-black"}
+                                            >
+                                                We enable communities to build and fund thei  shared needs. Help us build a regenerative crypto.
+                                            </p>
+                                            <div
+                                                className={"flex flex-row justify-between items-center"}
+                                            >
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-mono-gray font-semibold"}
+                                                >
+                                                    Mar. 15, 2023
+                                                </p>
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-[#FFB800] font-semibold"}
+                                                >
+                                                    +3 Points
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    className={"flex flex-col space-y-[12px]"}
+                                >
+                                    <p
+                                        className={"text-[20px] leading-[25px] text-green-primary font-medium"}
+                                    >
+                                        Cycle: Mar 01 - 09
+                                    </p>
+                                    <div
+                                        className={"flex flex-col space-y-[8px]"}
+                                    >
+                                        <div
+                                            className={"flex flex-col space-y-[12px] " +
+                                                "py-[20px] px-[24px] rounded-[12px] bg-mono-white border " +
+                                                "border-mono-lightgray"}
+                                        >
+                                            <div
+                                                className={"flex flex-row space-x-[16px] items-center"}
+                                            >
+                                                <div
+                                                    className={"flex flex-row space-x-[6px] items-center"}
+                                                >
+                                                    <div
+                                                        className={"w-[28px] h-[28px] bg-[#242424] rounded-[50%]"}
+                                                    />
+                                                    <p
+                                                        className={"text-[16px] leading-[20px] text-mono-black font-medium"}
+                                                    >
+                                                        Chelsea Lee
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={"flex flex-row items-center space-x-[4px]"}
+                                                >
+                                                    <RoleLabel isOwner />
+                                                    <RoleLabel role={"Core-Contributor"} />
+                                                </div>
+                                            </div>
+                                            <p
+                                                className={"text-[16px] leading-[20px] text-mono-black"}
+                                            >
+                                                We enable communities to build and fund thei  shared needs. Help us build a regenerative crypto.
+                                            </p>
+                                            <div
+                                                className={"flex flex-row justify-between items-center"}
+                                            >
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-mono-gray font-semibold"}
+                                                >
+                                                    Mar. 15, 2023
+                                                </p>
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-[#FFB800] font-semibold"}
+                                                >
+                                                    +3 Points
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={"flex flex-col space-y-[12px] " +
+                                                "py-[20px] px-[24px] rounded-[12px] bg-mono-white border " +
+                                                "border-mono-lightgray"}
+                                        >
+                                            <div
+                                                className={"flex flex-row space-x-[16px] items-center"}
+                                            >
+                                                <div
+                                                    className={"flex flex-row space-x-[6px] items-center"}
+                                                >
+                                                    <div
+                                                        className={"w-[28px] h-[28px] bg-[#242424] rounded-[50%]"}
+                                                    />
+                                                    <p
+                                                        className={"text-[16px] leading-[20px] text-mono-black font-medium"}
+                                                    >
+                                                        Chelsea Lee
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={"flex flex-row items-center space-x-[4px]"}
+                                                >
+                                                    <RoleLabel isOwner />
+                                                    <RoleLabel role={"Core-Contributor"} />
+                                                </div>
+                                            </div>
+                                            <p
+                                                className={"text-[16px] leading-[20px] text-mono-black"}
+                                            >
+                                                We enable communities to build and fund thei  shared needs. Help us build a regenerative crypto.
+                                            </p>
+                                            <div
+                                                className={"flex flex-row justify-between items-center"}
+                                            >
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-mono-gray font-semibold"}
+                                                >
+                                                    Mar. 15, 2023
+                                                </p>
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-[#FFB800] font-semibold"}
+                                                >
+                                                    +3 Points
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={"flex flex-col space-y-[12px] " +
+                                                "py-[20px] px-[24px] rounded-[12px] bg-mono-white border " +
+                                                "border-mono-lightgray"}
+                                        >
+                                            <div
+                                                className={"flex flex-row space-x-[16px] items-center"}
+                                            >
+                                                <div
+                                                    className={"flex flex-row space-x-[6px] items-center"}
+                                                >
+                                                    <div
+                                                        className={"w-[28px] h-[28px] bg-[#242424] rounded-[50%]"}
+                                                    />
+                                                    <p
+                                                        className={"text-[16px] leading-[20px] text-mono-black font-medium"}
+                                                    >
+                                                        Chelsea Lee
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={"flex flex-row items-center space-x-[4px]"}
+                                                >
+                                                    <RoleLabel isOwner />
+                                                    <RoleLabel role={"Core-Contributor"} />
+                                                </div>
+                                            </div>
+                                            <p
+                                                className={"text-[16px] leading-[20px] text-mono-black"}
+                                            >
+                                                We enable communities to build and fund thei  shared needs. Help us build a regenerative crypto.
+                                            </p>
+                                            <div
+                                                className={"flex flex-row justify-between items-center"}
+                                            >
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-mono-gray font-semibold"}
+                                                >
+                                                    Mar. 15, 2023
+                                                </p>
+                                                <p
+                                                    className={"text-[14px] leading-[18px] text-[#FFB800] font-semibold"}
+                                                >
+                                                    +3 Points
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div
-                            className={"flex flex-col space-y-[8px]"}
-                        >
-                            {
-                                tasks.filter(task => task.status === "In Review").map((task, index) => (
-                                    <TaskBox
-                                        onClick={() => setOpen(true)}
-                                        key={index}
-                                        name={task.name}
-                                        projectName={task.projectName}
-                                        dueDate={task.dueDate}
-                                        assigner={task.assigner}
-                                    />
-                                ))
-                            }
-                        </div>
-                    </div>
-                    <div
-                        className={"flex flex-col space-y-[18px] grow"}
-                    >
-                        <div
-                            className={"flex flex-row items-center space-x-[6px]"}
-                        >
-                            <ContributionStatusLabel isBig status={"Done"} />
-                            <p
-                                className={"text-[16px] leading-[20px] text-mono-gray font-medium"}
+                    ) : (
+                        <>
+                            <div
+                                className={"flex flex-row space-x-[20px]"}
                             >
-                                {tasks.filter(task => task.status === "Done").length}
-                            </p>
-                        </div>
-                        <div
-                            className={"flex flex-col space-y-[8px]"}
-                        >
-                            {
-                                tasks.filter(task => task.status === "Done").map((task, index) => (
-                                    <TaskBox
-                                        onClick={() => setOpen(true)}
-                                        key={index}
-                                        name={task.name}
-                                        projectName={task.projectName}
-                                        dueDate={task.dueDate}
-                                        assigner={task.assigner}
-                                    />
-                                ))
-                            }
-                        </div>
-                    </div>
-                </div>
+                                <div
+                                    className={"flex flex-col space-y-[18px] grow"}
+                                >
+                                    <div
+                                        className={"flex flex-row items-center space-x-[6px]"}
+                                    >
+                                        <ContributionStatusLabel
+                                            status={"In Progress"}
+                                            isBig
+                                        />
+                                        <p
+                                            className={"text-[16px] leading-[20px] text-mono-gray font-medium"}
+                                        >
+                                            {tasks.filter(task => task.status === "In Progress").length}
+                                        </p>
+                                    </div>
+                                    <div
+                                        className={"flex flex-col space-y-[8px]"}
+                                    >
+                                        {
+                                            tasks.filter(task => task.status === "In Progress").map((task, index) => (
+                                                <TaskBox
+                                                    onClick={() => setOpen(true)}
+                                                    key={index}
+                                                    name={task.name}
+                                                    projectName={task.projectName}
+                                                    dueDate={task.dueDate}
+                                                    assigner={task.assigner}
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                                <div
+                                    className={"flex flex-col space-y-[18px] grow"}
+                                >
+                                    <div
+                                        className={"flex flex-row items-center space-x-[6px]"}
+                                    >
+                                        <ContributionStatusLabel isBig status={"In Review"} />
+                                        <p
+                                            className={"text-[16px] leading-[20px] text-mono-gray font-medium"}
+                                        >
+                                            {tasks.filter(task => task.status === "In Review").length}
+                                        </p>
+                                    </div>
+                                    <div
+                                        className={"flex flex-col space-y-[8px]"}
+                                    >
+                                        {
+                                            tasks.filter(task => task.status === "In Review").map((task, index) => (
+                                                <TaskBox
+                                                    onClick={() => setOpen(true)}
+                                                    key={index}
+                                                    name={task.name}
+                                                    projectName={task.projectName}
+                                                    dueDate={task.dueDate}
+                                                    assigner={task.assigner}
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                                <div
+                                    className={"flex flex-col space-y-[18px] grow"}
+                                >
+                                    <div
+                                        className={"flex flex-row items-center space-x-[6px]"}
+                                    >
+                                        <ContributionStatusLabel isBig status={"Done"} />
+                                        <p
+                                            className={"text-[16px] leading-[20px] text-mono-gray font-medium"}
+                                        >
+                                            {tasks.filter(task => task.status === "Done").length}
+                                        </p>
+                                    </div>
+                                    <div
+                                        className={"flex flex-col space-y-[8px]"}
+                                    >
+                                        {
+                                            tasks.filter(task => task.status === "Done").map((task, index) => (
+                                                <TaskBox
+                                                    onClick={() => setOpen(true)}
+                                                    key={index}
+                                                    name={task.name}
+                                                    projectName={task.projectName}
+                                                    dueDate={task.dueDate}
+                                                    assigner={task.assigner}
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )
+                }
                 <TaskDialog
                     open={open}
                     onClose={() => setOpen(false)}
