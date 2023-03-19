@@ -185,9 +185,11 @@ function App() {
         proofSize: PROOFSIZE,
       }) as WeightV2,
       storageDepositLimit,
-    });
+    }, activeAccount!.address);
     
     const balance = JSON.parse(output!.toString()).ok;
+    
+    console.log(balance, output!.toHuman());
     
     if(balance > 0) {
       await register(gasLimit, api!, accountSigner);
