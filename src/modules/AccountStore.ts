@@ -15,7 +15,9 @@ interface AccountStore {
     api: ApiPromise | null;
     setApi: (api: ApiPromise | null) => void;
     signer: InjectedExtension | null;
-    setSigner: (signer: InjectedExtension | null) => void
+    setSigner: (signer: InjectedExtension | null) => void;
+    accountId: string | null;
+    setAccountId: (accountId: string | null) => void;
 }
 
 export const useAccountStore = create<AccountStore>()((set) => ({
@@ -30,5 +32,7 @@ export const useAccountStore = create<AccountStore>()((set) => ({
     api: null,
     setApi: (api) => set({ api }),
     signer: null,
-    setSigner: (signer) => set({ signer })
+    setSigner: (signer) => set({ signer }),
+    accountId: null,
+    setAccountId: (accountId) => set({ accountId }),
 }))

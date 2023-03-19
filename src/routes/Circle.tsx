@@ -20,6 +20,8 @@ export const Circle = () => {
     const account = useAccountStore(state => state.account);
     const api = useAccountStore(state => state.api);
     
+    const accountId = useAccountStore(state => state.accountId);
+    
     const [loading, setLoading] = useState(false);
     const [joined, setJoined] = useState(false);
     
@@ -68,7 +70,7 @@ export const Circle = () => {
         });
 
         const obj = JSON.parse(output!.toString());
-        console.log(obj.ok.includes(account!.address));
+        setJoined(obj.ok.includes(accountId));
     }
     
     useEffect(() => {

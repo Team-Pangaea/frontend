@@ -53,6 +53,7 @@ function App() {
   const setApi = useAccountStore(state => state.setApi);
   
   const setSigner = useAccountStore(state => state.setSigner);
+  const setAccountId = useAccountStore(state => state.setAccountId);
   
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -198,6 +199,14 @@ function App() {
       await initialApi.isReady;
       
       const keyring = new Keyring();
+
+      const accountId = keyring.encodeAddress(
+          keyring.decodeAddress(activeAccount!.address),
+          5
+      )
+      
+      setAccountId(accountId);
+      console.log(accountId);
       
       setApi(initialApi);
       
