@@ -31,7 +31,11 @@ export const Header = () => {
                 <div className={"container mx-auto flex flex-row items-center justify-between"}>
                     <div className={"flex flex-row items-center space-x-[44px]"}>
                         <button
-                            onClick={() => navigate("/")}
+                            onClick={() => {
+                                account ? 
+                                    navigate("/explore") 
+                                    : navigate("/")
+                            }}
                         >
                             <img
                                 src={"/logo.svg"}
