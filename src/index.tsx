@@ -16,11 +16,13 @@ import {CircleProjects} from "src/routes/Circle/Projects";
 import {CircleTasks} from "src/routes/Circle/Tasks";
 import {CircleAllocate} from "src/routes/Circle/Allocate";
 import {CircleUserAllocate} from "src/routes/Circle/UserAllocate";
+import {ErrorPage} from "src/routes/App/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: "/",
