@@ -13,7 +13,7 @@ export const Circle = () => {
     const match = useMatch("/circle/overview/:_/:projectName");
     const projectName = match?.params.projectName;
 
-    const match2 = useMatch("/circle/overview/:activeName");
+    const match2 = useMatch("/circle/:_/:activeName");
     const activeName = match2?.params.activeName;
     
     const daoContract = useAccountStore(state => state.daoContract);

@@ -2,10 +2,13 @@ import React from "react";
 import {ReviewListItem} from "src/routes/components/ReviewListItem";
 import {ContributionListItem} from "src/routes/components/ContributionListItem";
 import {CircleTabs} from "src/routes/Circle/CircleTabs";
+import {useNavigate} from "react-router-dom";
 
 interface MyContributionsProps {}
 
 export const CircleMyContributions = ({}: MyContributionsProps) => {
+    const navigate = useNavigate();
+    
     const reviews = [
         {
             createdAt: "Mar 15. 2023",
@@ -167,6 +170,7 @@ export const CircleMyContributions = ({}: MyContributionsProps) => {
                         </p>
                     </div>
                     <button
+                        onClick={() => navigate("/circle/my-contributions/allocate")}
                         className={"rounded-[8px] py-[8px] px-[20px] bg-blue-400 text-mono-white font-semibold"}
                     >
                         Start peer review
